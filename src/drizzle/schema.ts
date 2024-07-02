@@ -1,91 +1,142 @@
-import { pgTable,serial ,decimal, integer, varchar, pgEnum, date, boolean } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
+import { pgTable, serial, decimal, integer, varchar, pgEnum, date, boolean } from 'drizzle-orm/pg-core';
 
-const roleEnum=pgEnum("rule",["admin","user"])
+export const roleEnum = pgEnum("role", ["admin", "user"]);
 
-export const usersTable=pgTable('users',{
-    id: serial("id").primaryKey(),
-    name: varchar("name").notNull(),
-    email: varchar("email").unique(),
-    contact_phone: varchar("contact_phone"),
-    role: roleEnum("role").default("user"),
-    created_at: date("created_at").notNull().default('now()'),
-    updated_at: date("updated_at")
-})
-
-export const vehiclesTable=pgTable('vehicles',{
-    vehicle_id: serial('id').primaryKey(),
-    rental_rate: decimal('rental_rate'),
-    availability: boolean('availability').notNull()
-})
-
-export const vehicle_specsTable=pgTable('vehicle_specs',{
-    vehicle_specsTable_id: serial('id').primaryKey(),
-    manufacturer: varchar('manufacturer').notNull(),
-    model: varchar('model').notNull(),
-    year: varchar('year'),
-    fuel_type: varchar('fuel_type').notNull(),
-    engine_capacity: varchar('engine_capacity').notNull(),
-    transmission_capacity: varchar('transmission_capacity'),
-    color: varchar('color'),
-    seating_capacity: varchar('seating_capacity').notNull(),
-    features: varchar('features')
+export const usersTable = pgTable('users', {
+  id: serial("id").primaryKey(),
+  name: varchar("name").notNull(),
+  email: varchar("email").unique(),
+  contact_phone: varchar("contact_phone"),
+  role: roleEnum("role").default("user"),
+  created_at: date("created_at").notNull().default('now()'),
+  updated_at: date("updated_at")
 });
 
-export const authenicationTable=pgTable('authenication',{
-    id: serial('id').notNull(),
-    user_id: integer('user_id').references(()=>usersTable.id,{onDelete: 'cascade'}),
-    password: varchar('password').notNull(),
-})
-
-export const fleetManagamentTable=pgTable('fleetTable',{
-   id: serial('id').notNull(),
-   vehicle_id: integer('vehicle_id').references(()=>vehiclesTable.vehicle_id,{onDelete: 'cascade'}),
-   acquisition_date: date('acquisition_date'),
-   depreciation_date: date('depreciation_date'),
-   maintances_cost: decimal('maintances_cost'),
-   status: varchar('status')
+export const vehiclesTable = pgTable('vehicles', {
+  vehicle_id: serial('id').primaryKey(),
+  rental_rate: decimal('rental_rate'),
+  availability: boolean('availability').notNull()
 });
 
-export const locationTable=pgTable('locationTable',{
-    id: serial('id').notNull(),
-    name: varchar('name').notNull(),
-    address: varchar('address').notNull(),
-    contact: varchar('contact').notNull(),
-})
+export const vehicle_specsTable = pgTable('vehicle_specs', {
+  vehicle_specsTable_id: serial('id').primaryKey(),
+  manufacturer: varchar('manufacturer').notNull(),
+  model: varchar('model').notNull(),
+  year: varchar('year'),
+  fuel_type: varchar('fuel_type').notNull(),
+  engine_capacity: varchar('engine_capacity').notNull(),
+  transmission_capacity: varchar('transmission_capacity'),
+  color: varchar('color'),
+  seating_capacity: varchar('seating_capacity').notNull(),
+  features: varchar('features')
+});
 
-const statusEnum=pgEnum("status",["pending","returned"])
+export const authenicationTable = pgTable('authenication', {
+  id: serial('id').primaryKey().notNull(),
+  user_id: integer('user_id').references(() => usersTable.id, { onDelete: 'cascade' }),
+  password: varchar('password').notNull(),
+});
 
-export const bookingTable=pgTable('bookingTable',{
-    id:serial('id').notNull(),
-    user_id: integer('user_id').references(()=>usersTable.id,{onDelete: 'cascade'}),
-    vehicle_id: integer('vehicle_id').references(()=>vehiclesTable.vehicle_id,{onDelete: 'cascade'}),
-    location_id: integer('location_id').references(()=>locationTable.id,{onDelete: 'cascade'}),
-    booking_date: date('booking_date').notNull(),
-    return_date: date('return_date').notNull(),
-    totalAmount: varchar('total_amount'),
-    status: statusEnum('status').default("pending")
-})
+export const fleetManagamentTable = pgTable('fleetTable', {
+  id: serial('id').primaryKey().notNull(),
+  vehicle_id: integer('vehicle_id').references(() => vehiclesTable.vehicle_id, { onDelete: 'cascade' }),
+  acquisition_date: date('acquisition_date'),
+  depreciation_date: date('depreciation_date'),
+  maintances_cost: decimal('maintances_cost'),
+  status: varchar('status')
+});
 
-const paymentEnum=pgEnum("payment",["pending","returned"])
+export const locationTable = pgTable('locationTable', {
+  id: serial('id').primaryKey().notNull(),
+  name: varchar('name').notNull(),
+  address: varchar('address').notNull(),
+  contact: varchar('contact').notNull(),
+});
 
-export const paymentTable= pgTable('payment',{
-    id: serial('id').notNull(),
-    booking_id: integer('booking_id').references(()=>bookingTable.id,{onDelete: 'cascade'}),
-    amount: decimal('amount').notNull(),
-    payment_status: paymentEnum('payment_status').default('pending'),
-    payment_date: date('payment_date').notNull(),
-    payment_method: varchar('payment_method').notNull(),
-    trasaction_id: varchar('trasaction_id'),
-})
+export const statusEnum = pgEnum("rule", ["pending", "returned"]);
 
-export const customer_support=pgTable('customer_support',{
-    id: serial('id').primaryKey(),
-    user_id: integer('user_id').references(()=>usersTable.id,{onDelete: 'cascade'}),
-    subject: varchar('subject').notNull(),
-    description: varchar('description').notNull(),
-    status: varchar('status').default('pending'),
-})
+export const bookingTable = pgTable('bookingTable', {
+  id: serial('id').primaryKey().notNull(),
+  user_id: integer('user_id').references(() => usersTable.id, { onDelete: 'cascade' }),
+  vehicle_id: integer('vehicle_id').references(() => vehiclesTable.vehicle_id, { onDelete: 'cascade' }),
+  location_id: integer('location_id').references(() => locationTable.id, { onDelete: 'cascade' }),
+  booking_date: date('booking_date').notNull(),
+  return_date: date('return_date').notNull(),
+  totalAmount: varchar('total_amount'),
+  status: statusEnum('status').default("pending")
+});
 
+export const paymentEnum = pgEnum("rule", ["pending", "returned"]);
+
+export const paymentTable = pgTable('payment', {
+  id: serial('id').primaryKey().notNull(),
+  booking_id: integer('booking_id').references(() => bookingTable.id, { onDelete: 'cascade' }),
+  amount: decimal('amount').notNull(),
+  payment_status: paymentEnum('payment_status').default('pending'),
+  payment_date: date('payment_date').notNull(),
+  payment_method: varchar('payment_method').notNull(),
+  trasaction_id: varchar('trasaction_id'),
+});
+
+export const customer_support = pgTable('customer_support', {
+  id: serial('id').primaryKey(),
+  user_id: integer('user_id').references(() => usersTable.id, { onDelete: 'cascade' }),
+  subject: varchar('subject').notNull(),
+  description: varchar('description').notNull(),
+  status: varchar('status').default('pending'),
+});
+
+// Relations
+export const usersRelations = relations(usersTable, ({ many, one }) => ({
+  bookings: many(bookingTable),
+  customerSupportTickets: many(customer_support),
+  authentication: one(authenicationTable),
+})); 
+
+export const vehiclesRelations = relations(vehiclesTable, ({ one, many }) => ({
+  vehicleSpecification: one(vehicle_specsTable),
+  bookings: many(bookingTable),
+  fleetManagementRecords: many(fleetManagamentTable),
+})); export const vehicle_specsRelations = relations(vehicle_specsTable, ({ one }) => ({
+  vehicle: one(vehiclesTable),
+})); export const bookingRelations = relations(bookingTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [bookingTable.user_id],
+    references: [usersTable.id],
+  }),
+  vehicle: one(vehiclesTable, {
+    fields: [bookingTable.vehicle_id],
+    references: [vehiclesTable.vehicle_id],
+  }),
+  location: one(locationTable, {
+    fields: [bookingTable.location_id],
+    references: [locationTable.id],
+  }),
+  payment: one(paymentTable),
+})); export const paymentRelations = relations(paymentTable, ({ one }) => ({
+  booking: one(bookingTable, {
+    fields: [paymentTable.booking_id],
+    references: [bookingTable.id],
+  }),
+})); export const authenicationRelations = relations(authenicationTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [authenicationTable.user_id],
+    references: [usersTable.id],
+  }),
+})); export const customer_supportRelations = relations(customer_support, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [customer_support.user_id],
+    references: [usersTable.id],
+  }),
+})); export const locationRelations = relations(locationTable, ({ many }) => ({
+  bookings: many(bookingTable),
+})); export const fleetManagamentRelations = relations(fleetManagamentTable, ({ one }) => ({
+  vehicle: one(vehiclesTable, {
+    fields: [fleetManagamentTable.vehicle_id],
+    references: [vehiclesTable.vehicle_id],
+  }),
+}));
 
 // user table
 export type UserSelect=typeof usersTable.$inferSelect
