@@ -13,7 +13,7 @@ export const deleteSupportDetails= async(id: number): Promise<string>=>{
     return 'Support deleted successfully'
 }
 
-export const updateSupportDetails=async(id: number, supportDetailsValue: customer_supportInsert): Promise<string>=>{
+export const updateSupportDetails=async(id: number, supportDetailsValue: Partial<customer_supportInsert>): Promise<string>=>{
     await db.update(customer_support).set(supportDetailsValue).where(eq(customer_support.id, id))
     return 'Support updated successfully'
 }
