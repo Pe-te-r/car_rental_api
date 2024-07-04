@@ -1,7 +1,10 @@
 import { Context } from "hono";
 import * as bcrypt from "bcrypt";
 import {  registerUser, storePassword, userExists } from "./auth.services";
+import {  sign} from "hono/jwt"
+import { loginReturnData } from "../types/types";
 
+// login
 export const loginController=async(c: Context)=>{
     const userDetails = await c.req.json()
     const userExist = await userExists(userDetails.email)
@@ -13,8 +16,29 @@ export const loginController=async(c: Context)=>{
     if(!passwordMatch){
         return c.json({"error":"Invalid credentials"},401)
     }
-    return c.json({"success":"login successful"},401)
+    const payload = {
+        user_id:userExist.id,
+        role:userExist.role,
+        email:userExist.email,
+        exp:Math.floor(Date.now()/1000)+(60*180)
+      }
+    const secret=process.env.SECRET_KEY as string
+    const token= await sign(payload, secret)
+
+
+    // login return obct
+    const returnData: loginReturnData ={
+        id:userExist.id,
+        name:userExist.name,
+        email:userExist?.email,
+        role:userExist.role,
+        contact_phone:userExist.contact_phone,
+        token:token,
+    }
+    console.log(returnData)
+    return c.json(returnData)
 }
+// register
 export const registerController=async(c: Context)=>{
     try {
         const newUser = await c.req.json()

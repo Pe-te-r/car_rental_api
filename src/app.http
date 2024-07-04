@@ -3,8 +3,8 @@ POST  http://localhost:3000/api/register
 Content-Type: application/json
 
     {
-        "name":"shakirah",
-        "email":"shakirah18@gmail.com",
+        "name":"peter",
+        "email":"peter@gmail.com",
         "contact_phone":"0748200233",
         "password":"12345"
     }
@@ -14,6 +14,11 @@ POST  http://localhost:3000/api/login
 Content-Type: application/json
 
     {
-        "email":"shakirah18@gmail.com",
+        "email":"peter@gmail.com",
         "password":"12345"
     }
+
+### getVehicle
+GET  http://localhost:3000/api/vehicle-spects
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwicm9sZSI6InVzZXIiLCJlbWFpbCI6InBldGVyQGdtYWlsLmNvbSIsImV4cCI6MTcyMDA5MzQ4NH0.p6QrJUWgRRRVw5zXe4Zvh5DxGF26WIQZwHK1CUjuhCw
+

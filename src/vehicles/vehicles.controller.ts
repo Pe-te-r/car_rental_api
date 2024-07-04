@@ -17,11 +17,11 @@ export const deleteVehicle=async(c: Context)=>{
 export const updateVehicle=async(c: Context)=>{
     const id = c.req.param('id')
     const vehicle = await c.req.json()
-    const result =updateVehicleDetails(Number(id),vehicle)
+    const result =await updateVehicleDetails(Number(id),vehicle)
     return c.json({"result": result})
 }
 
 export const getVehicle=async(c: Context)=>{
-    const results = getVehicleDetails()
+    const results =await getVehicleDetails()
     return c.json({"results": results},200)
 }
