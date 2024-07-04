@@ -4,7 +4,7 @@ import { allMiddleware } from "../middle_auth/middleware";
 
 export const vehicleRoute= new Hono()
 
-vehicleRoute.get('/vehicle',allMiddleware,getVehicle)
-vehicleRoute.post('/vehicle',createVehicle)
+vehicleRoute.get('/vehicles',allMiddleware,getVehicle)
+vehicleRoute.post('/vehicles',createVehicle)
 vehicleRoute.put('/vehicles',updateVehicle)
 vehicleRoute.delete('/vehicles',deleteVehicle)

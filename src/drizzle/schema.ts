@@ -38,7 +38,7 @@ export const authenicationTable = pgTable('authenication', {
   password: varchar('password').notNull(),
 });
 
-export const fleetManagamentTable = pgTable('fleetTable', {
+export const fleetManagamentTable = pgTable('fleet_table', {
   id: serial('id').primaryKey().notNull(),
   vehicle_id: integer('vehicle_id').references(() => vehiclesTable.vehicle_id, { onDelete: 'cascade' }),
   acquisition_date: date('acquisition_date'),
@@ -47,7 +47,7 @@ export const fleetManagamentTable = pgTable('fleetTable', {
   status: varchar('status')
 });
 
-export const locationTable = pgTable('locationTable', {
+export const locationTable = pgTable('locations', {
   id: serial('id').primaryKey().notNull(),
   name: varchar('name').notNull(),
   address: varchar('address').notNull(),
@@ -56,7 +56,7 @@ export const locationTable = pgTable('locationTable', {
 
 export const statusEnum = pgEnum("rule", ["pending", "returned"]);
 
-export const bookingTable = pgTable('bookingTable', {
+export const bookingTable = pgTable('bookings', {
   id: serial('id').primaryKey().notNull(),
   user_id: integer('user_id').references(() => usersTable.id, { onDelete: 'cascade' }),
   vehicle_id: integer('vehicle_id').references(() => vehiclesTable.vehicle_id, { onDelete: 'cascade' }),
@@ -98,9 +98,14 @@ export const vehiclesRelations = relations(vehiclesTable, ({ one, many }) => ({
   vehicleSpecification: one(vehicle_specsTable),
   bookings: many(bookingTable),
   fleetManagementRecords: many(fleetManagamentTable),
-})); export const vehicle_specsRelations = relations(vehicle_specsTable, ({ one }) => ({
+  // location: one(locationTable),
+}));
+
+export const vehicle_specsRelations = relations(vehicle_specsTable, ({ one }) => ({
   vehicle: one(vehiclesTable),
-})); export const bookingRelations = relations(bookingTable, ({ one }) => ({
+}));
+
+export const bookingRelations = relations(bookingTable, ({ one }) => ({
   user: one(usersTable, {
     fields: [bookingTable.user_id],
     references: [usersTable.id],
@@ -114,24 +119,35 @@ export const vehiclesRelations = relations(vehiclesTable, ({ one, many }) => ({
     references: [locationTable.id],
   }),
   payment: one(paymentTable),
-})); export const paymentRelations = relations(paymentTable, ({ one }) => ({
+}));
+
+export const paymentRelations = relations(paymentTable, ({ one }) => ({
   booking: one(bookingTable, {
     fields: [paymentTable.booking_id],
     references: [bookingTable.id],
   }),
-})); export const authenicationRelations = relations(authenicationTable, ({ one }) => ({
+})); 
+
+export const authenicationRelations = relations(authenicationTable, ({ one }) => ({
   user: one(usersTable, {
     fields: [authenicationTable.user_id],
     references: [usersTable.id],
   }),
-})); export const customer_supportRelations = relations(customer_support, ({ one }) => ({
+})); 
+
+export const customer_supportRelations = relations(customer_support, ({ one }) => ({
   user: one(usersTable, {
     fields: [customer_support.user_id],
     references: [usersTable.id],
   }),
-})); export const locationRelations = relations(locationTable, ({ many }) => ({
+})); 
+
+export const locationRelations = relations(locationTable, ({ many }) => ({
   bookings: many(bookingTable),
-})); export const fleetManagamentRelations = relations(fleetManagamentTable, ({ one }) => ({
+  vehicles: many(vehiclesTable),
+})); 
+
+export const fleetManagamentRelations = relations(fleetManagamentTable, ({ one }) => ({
   vehicle: one(vehiclesTable, {
     fields: [fleetManagamentTable.vehicle_id],
     references: [vehiclesTable.vehicle_id],

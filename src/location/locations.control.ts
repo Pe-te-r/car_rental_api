@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { createLocationsDetails, deleteLocationsDetails, updateLocationsDetails } from "./locations.services";
+import { createLocationsDetails, deleteLocationsDetails, getLocationsDetails, updateLocationsDetails } from "./locations.services";
 
 export const createLocation=async(c: Context)=>{
     const newLocation=await c.req.json()
@@ -21,6 +21,7 @@ export const updateLocation=async(c: Context)=>{
 }
 
 export const getLocations=async(c: Context)=>{
-    const results = await c.req.json()
-    return c.json({results: results}, 200)
+    const results = await getLocationsDetails()
+    console.log('here')
+    return c.json({results: results})
 }
