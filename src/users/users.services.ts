@@ -1,12 +1,34 @@
 import { eq } from "drizzle-orm"
 import db from "../drizzle/db"
 import { UserSelect, userInsert, usersTable } from "../drizzle/schema"
-// import { userTypeReturn } from "../types/types"
+
 
 export const getOneUserDetails = async (id: number): Promise<UserSelect | undefined> => {
     return await db.query.usersTable.findFirst({
-        where: eq(usersTable.id, id)
+        where: eq(usersTable.id, id),
+        with:{
+            bookings: true,
+            customerSupportTickets:true
+        }
     })
+}
+
+export const getAllUserDetails=async(limit:number,details:boolean):Promise<UserSelect[] | null> => {
+    if (limit > 0 && details){
+        return await db.query.usersTable.findMany({
+            limit: limit,
+            with:{
+                bookings: true,
+                customerSupportTickets:true
+            }
+        })
+    }else if(limit > 0 && !details){
+        return await db.query.usersTable.findMany({
+            limit: limit,
+        })
+    }else{
+        return await db.query.usersTable.findMany()
+    }
 }
 
 export const addUserDetails=async(user: userInsert): Promise<string>=>{
@@ -15,12 +37,8 @@ export const addUserDetails=async(user: userInsert): Promise<string>=>{
 }
 
 export const deletUsersDetails=async(id: number): Promise<string>=>{
-    try {
         await db.delete(usersTable).where(eq(usersTable.id, id ))
         return "User deleted successfully"
-    } catch (error: any) {
-        return error?.message
-    }
 }
 
 export const updateUserDetails=async(id: number, user: Partial<userInsert>): Promise<string>=>{

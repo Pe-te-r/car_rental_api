@@ -19,7 +19,26 @@ Content-Type: application/json
     }
 
 ### Get all users
+GET  http://localhost:3000/api/users?limit=1&details=true
+
+### Get one users
 GET  http://localhost:3000/api/users/1
+
+### UPdate one user
+PUT http://localhost:3000/api/users/1
+Content-Type: application/json
+
+    {
+        "name":"phantom",
+        "email":"peter@gmail.com",
+        "contact_phone":"0748200233",
+        "password":"12345"
+    }
+### Delete one user
+DELETE  http://localhost:3000/api/users/1
+
+
+###Vehicles-spects
 
 ### getVehicle
 GET  http://localhost:3000/api/vehicle-spects

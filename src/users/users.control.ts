@@ -1,9 +1,8 @@
 
 import { Context } from "hono";
-import { addUserDetails, deletUsersDetails, getOneUserDetails, updateUserDetails } from "./users.services";
-import { realpathSync } from "fs";
-// import { number } from "zod";
-// import { userLogin } from "../types/types";
+import { addUserDetails, deletUsersDetails, getAllUserDetails, getOneUserDetails, updateUserDetails } from "./users.services";
+import { any } from "zod";
+
 
 export const getUser=async(c: Context)=>{
     const id = c.req.param('id')
@@ -11,6 +10,19 @@ export const getUser=async(c: Context)=>{
     const result = await getOneUserDetails(Number(id))
     if(result===undefined) return c.json({"message":`no such user with id ${id}`})
     return c.json({"results" : result})
+}
+
+export const getAllUser=async(c: Context)=>{
+    try {
+        const query= c.req.query()
+        const limt = query['limit']
+        const details = query['details']
+        const result = await getAllUserDetails(Number(limt),Boolean(details))
+        if(result === null) return c.json({"message":"no user available"})
+        return c.json(result)
+    } catch (error: any) {
+        return c.json({"message": "error occured"})
+    }
 }
 
 // controller for adding a user
