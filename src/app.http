@@ -38,7 +38,33 @@ Content-Type: application/json
 DELETE  http://localhost:3000/api/users/1
 
 
-###Vehicles-spects
+###Vehicles
+POST http://localhost:3000/api/vehicles
+Content-Type: application/json
+
+    {
+        "rental_rate": 5.5,
+        "availability":true
+    }
+
+### get vehicle
+GET  http://localhost:3000/api/vehicles?limit=1&details=true
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwicm9sZSI6InVzZXIiLCJlbWFpbCI6InBldGVyQGdtYWlsLmNvbSIsImV4cCI6MTcyMDMxMTA1N30.yV4eYNZ3y665V2yijoKY3nwfmTjN032_T0KZ5zdOyuI
+
+### get one vehicle
+GET  http://localhost:3000/api/vehicles/1?details=true
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwicm9sZSI6InVzZXIiLCJlbWFpbCI6InBldGVyQGdtYWlsLmNvbSIsImV4cCI6MTcyMDMxMTA1N30.yV4eYNZ3y665V2yijoKY3nwfmTjN032_T0KZ5zdOyuI
+
+### update vehicles details
+PUT http://localhost:3000/api/vehicles/1
+Content-Type: application/json
+
+    {
+        "rental_rate": 7.5,
+        "availability":true
+    }
+###delet vehicles details
+DELETE  http://localhost:3000/api/vehicles/1
 
 ### getVehicle
 GET  http://localhost:3000/api/vehicle-spects
@@ -50,4 +76,3 @@ GET  http://localhost:3000/api/location
 
 ### vehicles
 GET  http://localhost:3000/api/vehicles
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwicm9sZSI6InVzZXIiLCJlbWFpbCI6InBldGVyQGdtYWlsLmNvbSIsImV4cCI6MTcyMDMxMTA1N30.yV4eYNZ3y665V2yijoKY3nwfmTjN032_T0KZ5zdOyuI

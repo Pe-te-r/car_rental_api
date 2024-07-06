@@ -26,6 +26,14 @@ export const getAllUserDetails=async(limit:number,details:boolean):Promise<UserS
         return await db.query.usersTable.findMany({
             limit: limit,
         })
+    
+    }else if(details){
+        return await db.query.usersTable.findMany({ 
+            with:{
+                bookings: true,
+                customerSupportTickets:true
+            }
+        })
     }else{
         return await db.query.usersTable.findMany()
     }
