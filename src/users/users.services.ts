@@ -10,12 +10,8 @@ export const getOneUserDetails = async (id: number): Promise<UserSelect | undefi
 }
 
 export const addUserDetails=async(user: userInsert): Promise<string>=>{
-    try {
         await db.insert(usersTable).values(user)
         return "User added successfully"
-    } catch (error: any) {
-        return error?.message
-    }
 }
 
 export const deletUsersDetails=async(id: number): Promise<string>=>{
@@ -28,10 +24,6 @@ export const deletUsersDetails=async(id: number): Promise<string>=>{
 }
 
 export const updateUserDetails=async(id: number, user: Partial<userInsert>): Promise<string>=>{
-    try {
         await db.update(usersTable).set(user).where(eq(usersTable.id, id ))
         return "User updated successfully"
-    } catch (error: any) {
-        return error?.message
     }
-}

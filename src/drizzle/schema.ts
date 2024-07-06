@@ -20,7 +20,7 @@ export const vehiclesTable = pgTable('vehicles', {
 });
 
 export const vehicle_specsTable = pgTable('vehicle_specs', {
-  vehicle_specsTable_id: serial('id').primaryKey(),
+  vehicle_specsTable_id: integer('id').references(()=>vehiclesTable.vehicle_id, {onDelete:'cascade'}),
   manufacturer: varchar('manufacturer').notNull(),
   model: varchar('model').notNull(),
   year: varchar('year'),
@@ -95,7 +95,10 @@ export const usersRelations = relations(usersTable, ({ many, one }) => ({
 })); 
 
 export const vehiclesRelations = relations(vehiclesTable, ({ one, many }) => ({
-  vehicleSpecification: one(vehicle_specsTable),
+  vehicleSpecification: one(vehicle_specsTable,{
+    fields: [vehiclesTable.vehicle_id],
+    references: [vehicle_specsTable.vehicle_specsTable_id],
+  }),
   bookings: many(bookingTable),
   fleetManagementRecords: many(fleetManagamentTable),
   // location: one(locationTable),

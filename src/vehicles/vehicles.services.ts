@@ -18,6 +18,11 @@ export const updateVehicleDetails=async(id: number, vehicleDetails: Partial<vehi
 }
 
 export const getVehicleDetails= async(): Promise<VehicleSelect[] | null>=>{
-   return await db.query.vehiclesTable.findMany()
-}
+   return await db.query.vehiclesTable.findMany({
+      limit: 10,
+      with:{
+         vehicleSpecification: true
+      }
+   })
 
+}
