@@ -66,8 +66,45 @@ Content-Type: application/json
 ###delet vehicles details
 DELETE  http://localhost:3000/api/vehicles/1
 
-### getVehicle
-GET  http://localhost:3000/api/vehicle-spects
+### get Vehicle-specific information
+GET  http://localhost:3000/api/vehicle-spects?limit=2&&details=true
+
+### get one car details specific
+GET  http://localhost:3000/api/vehicle-spects/2?details=true
+
+### delete one car vehicle details specific
+DELETE  http://localhost:3000/api/vehicle-spects/1
+
+###update one vehicle specific details
+PUT http://localhost:3000/api/vehicle-spects/1
+Content-Type: application/json
+
+    {
+        "manufacturer":"toyota",
+        "model":"corolla",
+        "year":2018,
+        "color":"blue",
+        "fuel_type":"petrol",
+        "engine_capacity":"10",
+        "transmission_capacity":"auto",
+        "seating_capacity":"11"
+    }
+
+### create vehicle spects
+POST http://localhost:3000/api/vehicle-spects
+Content-Type: application/json
+
+    {
+        "vehicle_specsTable_id":1,
+        "manufacturer":"toyota",
+        "model":"corolla",
+        "year":2018,
+        "color":"blue",
+        "fuel_type":"petrol",
+        "engine_capacity":"10",
+        "transmission_capacity":"manual",
+        "seating_capacity":"10"
+    }
 
 
 ### locations
