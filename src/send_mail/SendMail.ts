@@ -35,13 +35,12 @@ export const sendMail = async (template: string,receiver: string, subject: strin
     from: process.env.EMAIL_ADDRESS,
     to: receiver,
     subject: subject,
-    // text: text, // Plain text body
     template: template,
     context:{
       username:username
     } 
   };
-
+  
   // Send email
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
