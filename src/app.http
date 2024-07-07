@@ -62,7 +62,7 @@ Content-Type: application/json
 
     {
         "rental_rate": 7.5,
-        "availability":true
+        "availability":false
     }
 ###delet vehicles details
 DELETE  http://localhost:3000/api/vehicles/1
@@ -203,7 +203,7 @@ Content-Type: application/json
 
     {
         "user_id":2,
-        "vehicle_id":2,
+        "vehicle_id":1,
         "location_id":2,
         "booking_date":"2015-12-07",
         "return_date":"2015-12-07",

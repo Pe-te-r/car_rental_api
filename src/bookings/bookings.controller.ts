@@ -1,19 +1,19 @@
 import { Context } from "hono";
 import { createBookingDetails, deleteBookingDetails, getBookingDetails, getBookingDetailsByUserId, updateBookingDetails } from "./bookings.services";
-import exp = require("constants");
 import { checkVehicleAvailability } from "./carAvailability";
 
 export const createBooking=async(c: Context)=>{
     try {
         const booking = await c.req.json()
         const available = await checkVehicleAvailability(booking['vehicle_id']);
-        if(!available) return c.json({"error": "Vehicle not available"})
+        if(!available['availability']) return c.json({"error": "Vehicle not available"})
         const result = await createBookingDetails(booking)
         return c.json({"result": result})
     } catch (error: any) {
         return c.json({"error": error.message})
     }
 }
+
 
 export const deleteBooking = async (c: Context)=>{
     try {
