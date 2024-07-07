@@ -44,16 +44,17 @@ Content-Type: application/json
 
     {
         "rental_rate": 5.5,
-        "availability":true
+        "availability":true,
+        "location_id": 2
     }
 
 ### get vehicle
-GET  http://localhost:3000/api/vehicles?limit=1&details=true
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwicm9sZSI6InVzZXIiLCJlbWFpbCI6InBldGVyQGdtYWlsLmNvbSIsImV4cCI6MTcyMDMxMTA1N30.yV4eYNZ3y665V2yijoKY3nwfmTjN032_T0KZ5zdOyuI
+GET  http://localhost:3000/api/vehicles?expedetails=true
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJyb2xlIjoidXNlciIsImVtYWlsIjoicGV0ZXJAZ21haWwuY29tIiwiZXhwIjoxNzIwMzIxOTUwfQ.C_iL5GQMsbiJrLBSSyJcfcjKe0V0WYXHaX34mKcZiOk
 
 ### get one vehicle
 GET  http://localhost:3000/api/vehicles/1?details=true
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwicm9sZSI6InVzZXIiLCJlbWFpbCI6InBldGVyQGdtYWlsLmNvbSIsImV4cCI6MTcyMDMxMTA1N30.yV4eYNZ3y665V2yijoKY3nwfmTjN032_T0KZ5zdOyuI
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJyb2xlIjoidXNlciIsImVtYWlsIjoicGV0ZXJAZ21haWwuY29tIiwiZXhwIjoxNzIwMzIxOTUwfQ.C_iL5GQMsbiJrLBSSyJcfcjKe0V0WYXHaX34mKcZiOk
 
 ### update vehicles details
 PUT http://localhost:3000/api/vehicles/1
@@ -108,8 +109,20 @@ Content-Type: application/json
 
 
 ### locations
-GET  http://localhost:3000/api/location
+GET  http://localhost:3000/api/location?limit=1&details=true
+
+###get one location
+GET  http://localhost:3000/api/location/2?details=true
 
 
-### vehicles
-GET  http://localhost:3000/api/vehicles
+### create location
+POST  http://localhost:3000/api/location
+Content-Type: application/json
+
+    {
+        "name":"nyeri",
+        "address":"379nyeri",
+        "contact":"08200312"
+    }
+###delete location
+DELETE  http://localhost:3000/api/location/1

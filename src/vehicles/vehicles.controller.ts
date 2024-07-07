@@ -7,7 +7,7 @@ export const createVehicle=async (c: Context)=>{
         const result = await createVehicleDetails(vehicle);
         return c.json({"result": result},201)
     } catch (error: any) {
-        return c.json({"error": "error creating vehicle"})
+        return c.json({"error": error.message})
     }
 }
 

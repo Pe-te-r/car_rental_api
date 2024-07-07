@@ -16,7 +16,8 @@ export const usersTable = pgTable('users', {
 export const vehiclesTable = pgTable('vehicles', {
   vehicle_id: serial('id').primaryKey(),
   rental_rate: decimal('rental_rate'),
-  availability: boolean('availability').notNull()
+  availability: boolean('availability').notNull(),
+  location_id: integer('location_id').references(()=>locationTable.id,{onDelete:'cascade'}),
 });
 
 export const vehicle_specsTable = pgTable('vehicle_specs', {
@@ -101,7 +102,10 @@ export const vehiclesRelations = relations(vehiclesTable, ({ one, many }) => ({
   }),
   bookings: many(bookingTable),
   fleetManagementRecords: many(fleetManagamentTable),
-  // location: one(locationTable),
+  location: one(locationTable,{
+    fields:[vehiclesTable.location_id],
+    references: [locationTable.id],
+  }),
 }));
 
 export const vehicle_specsRelations = relations(vehicle_specsTable, ({ one }) => ({

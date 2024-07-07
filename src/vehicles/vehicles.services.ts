@@ -23,7 +23,8 @@ export const getVehicleDetails= async(limit: number, details: boolean): Promise<
          limit:limit,
          with:{
             bookings: true,
-            vehicleSpecification: true
+            vehicleSpecification: true,
+            location:true
          }
 
        })
@@ -35,7 +36,8 @@ export const getVehicleDetails= async(limit: number, details: boolean): Promise<
       return await db.query.vehiclesTable.findMany({
          with:{
             bookings: true,
-            vehicleSpecification: true
+            vehicleSpecification: true,
+            location: true
          }
        })
    }else{
@@ -50,7 +52,12 @@ export const getVehicleDetail=async(id: number,details:boolean): Promise<any | n
          with:{
             bookings: true,
             vehicleSpecification: true,
-            fleetManagementRecords: true
+            fleetManagementRecords: true,
+            location: {
+               columns:{
+                  name:true
+               }
+            }
          }
  
       })
