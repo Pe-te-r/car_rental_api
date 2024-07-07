@@ -62,7 +62,7 @@ export const registerController=async(c: Context)=>{
         }
         const storedPass = await storePassword(hashedPassword.toString(),Number(userId[0]['id']))
         if(storedPass){
-            sendMail('register',newUser.email,newUser.name)
+            sendMail('register',newUser.email,"car rental registration",newUser.name)
             return c.json({'username':newUser.name})
         }else{
             await deleteUserFailed(Number(userId[0]['id']))

@@ -1,7 +1,7 @@
 import * as nodemailer from 'nodemailer';
 import 'dotenv/config';
 import * as path from 'path';
-import  hbs from 'nodemailer-express-handlebars';
+import hbs  from 'nodemailer-express-handlebars';
 
 export const sendMail = async (template: string,receiver: string, subject: string,username?: string) => {
   // Create a transporter object using the Gmail SMTP transport
