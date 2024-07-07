@@ -18,6 +18,41 @@ export const updateSupportDetails=async(id: number, supportDetailsValue: Partial
     return 'Support updated successfully'
 }
 
-export const getSupportDetails= async(): Promise<customer_supportSelect[] | null>=>{
-    return await db.query.customer_support.findMany()
+export const getSupportDetails= async(limit: number,details: boolean): Promise<customer_supportSelect[] | null>=>{
+    if(limit>0 && details){
+        return await db.query.customer_support.findMany({
+            limit: limit,
+            with:{
+                user: true,
+            }
+        })
+    }else if(limit>0 && !details){
+        return await db.query.customer_support.findMany({
+            limit: limit,
+        })
+    }else if(details){
+        return await db.query.customer_support.findMany({
+            with:{
+                user: true,
+            }
+        })
+    }else{
+        return await db.query.customer_support.findMany()
+    }
+
+}
+
+export const getOneSupportDetails=async(id: number, details: boolean): Promise<any | null>=>{
+    if(details){
+        return await db.query.customer_support.findFirst({
+            where:eq(customer_support.id,id),
+            with:{
+                user: true,
+            }
+        })
+    }else{
+        return await db.query.customer_support.findFirst({
+            where:eq(customer_support.id,id),
+        })
+    }
 }
