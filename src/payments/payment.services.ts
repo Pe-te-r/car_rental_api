@@ -18,6 +18,42 @@ export const updatePaymentDetails=async(id: number, payments: Partial<paymentIns
     return "payment updated successfully"
 }
 
-export const getPaymentDetails=async(): Promise<paymentInsert[] | null>=>{
-    return await db.query.paymentTable.findMany()
+export const getPaymentDetails=async(limit: number,details:boolean): Promise<paymentInsert[] | null>=>{
+    if(limit>0 && details){
+        return await db.query.paymentTable.findMany({
+            limit: limit,
+            with:{
+                booking: true,
+            }
+        });
+    }else if(limit>0 && !details){
+        return await db.query.paymentTable.findMany({
+            limit: limit,
+        });
+    }else if(details){
+        return await db.query.paymentTable.findMany(
+            {
+                with:{
+                    booking: true,
+                }
+            }
+        );
+    }else {
+        return await db.query.paymentTable.findMany();
+    }
+}
+
+export const getOnePaymentDetails=async(id: number, details: boolean): Promise<any | null> => {
+    if(details){
+        return await db.query.paymentTable.findFirst({
+            where:eq(paymentTable.id,id),
+            with:{
+                booking: true,
+            }
+        });
+    }else{
+        return await db.query.paymentTable.findFirst({
+            where:eq(paymentTable.id,id),
+        });
+    }
 }

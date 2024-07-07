@@ -225,3 +225,39 @@ Content-Type: application/json
         "status":"returned"
     }
 
+
+###delete one booking
+DELETE  http://localhost:3000/api/bookings/1
+
+
+### payment 
+POST http://localhost:3000/api/payment
+Content-Type: application/json
+
+    {
+        "booking_id":1,
+        "amount":"200",
+        "payment_status":"pending",
+        "payment_date":"2015-12-07",
+        "payment_method":"safaricom",
+        "trasaction_id":"1234567890"
+    }
+
+###get one payment
+GET  http://localhost:3000/api/payment/2?details=true
+
+### get all payments
+GET  http://localhost:3000/api/payment?details=true
+
+###update payment
+PUT http://localhost:3000/api/payment/2
+Content-Type: application/json
+
+    {
+        "booking_id":1,
+        "amount":"300",
+        "payment_status":"pending",
+        "payment_date":"2015-12-07",
+        "payment_method":"safaricom",
+        "trasaction_id":"123456789"
+    }
