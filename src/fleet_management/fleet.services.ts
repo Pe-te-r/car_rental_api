@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import db from "../drizzle/db";
-import { fleetManagamentInsert, fleetManagamentTable } from "../drizzle/schema";
+import { fleetManagamentInsert, fleetManagamentSelect, fleetManagamentTable } from "../drizzle/schema";
 
 export const createFleetDetails=async(fleet: fleetManagamentInsert): Promise<string>=>{
     await db.insert(fleetManagamentTable).values(fleet)
@@ -17,6 +17,39 @@ export const updateFleetDetails=async(id:number, details: Partial<fleetManagamen
     return "Fleet updated successfully"
 }
 
-export const getFleetDetails= async(): Promise<fleetManagamentInsert[] | null>=>{
-    return await db.query.fleetManagamentTable.findMany()
+export const getFleetDetails= async(limit: number,details: boolean): Promise<fleetManagamentSelect[] | null>=>{
+    if(limit> 0 && details){
+        return await db.query.fleetManagamentTable.findMany({
+            limit:limit,
+            with:{
+               vehicle:true 
+            }
+        })
+    }else if(limit > 0 && !details){
+        return await db.query.fleetManagamentTable.findMany({limit:limit})
+    }else if(details){
+        return await db.query.fleetManagamentTable.findMany(
+            {
+                with:{
+                    vehicle:true 
+                }
+            }
+        )
+    }else{
+        return await db.query.fleetManagamentTable.findMany()
+    }
+
+}
+
+export const getOneFleetDetails=async(id: number, details: boolean): Promise<any | null>=>{ 
+    if(details){
+        return await db.query.fleetManagamentTable.findFirst({
+            where:eq(fleetManagamentTable.id,id),
+            with:{
+               vehicle:true 
+            }
+        })
+    }else{
+        return await db.query.fleetManagamentTable.findFirst({where:eq(fleetManagamentTable.id,id)})
+    }
 }

@@ -37,7 +37,8 @@ export const getVehicleDetails= async(limit: number, details: boolean): Promise<
          with:{
             bookings: true,
             vehicleSpecification: true,
-            location: true
+            location: true,
+            fleetManagementRecords:true
          }
        })
    }else{

@@ -49,11 +49,11 @@ Content-Type: application/json
     }
 
 ### get vehicle
-GET  http://localhost:3000/api/vehicles?expedetails=true
+GET  http://localhost:3000/api/vehicles?details=true
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJyb2xlIjoidXNlciIsImVtYWlsIjoicGV0ZXJAZ21haWwuY29tIiwiZXhwIjoxNzIwMzIxOTUwfQ.C_iL5GQMsbiJrLBSSyJcfcjKe0V0WYXHaX34mKcZiOk
 
 ### get one vehicle
-GET  http://localhost:3000/api/vehicles/1?details=true
+GET  http://localhost:3000/api/vehicles/2?details=true
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJyb2xlIjoidXNlciIsImVtYWlsIjoicGV0ZXJAZ21haWwuY29tIiwiZXhwIjoxNzIwMzIxOTUwfQ.C_iL5GQMsbiJrLBSSyJcfcjKe0V0WYXHaX34mKcZiOk
 
 ### update vehicles details
@@ -126,3 +126,37 @@ Content-Type: application/json
     }
 ###delete location
 DELETE  http://localhost:3000/api/location/1
+
+### fleet 
+POST http://localhost:3000/api/fleet
+Content-Type: application/json
+
+    {
+        "vehicle_id": 2,
+        "acquisition_date":"2015-12-07",
+        "depreciation_date":"2015-12-07",
+        "maintances_cost":300.23,
+        "status": "old"
+    }
+
+
+###get all fleet
+GET  http://localhost:3000/api/fleet?details=true
+
+###get one fleet
+GET  http://localhost:3000/api/fleet/1?details=true
+
+###update one fleet
+PUT http://localhost:3000/api/fleet/1
+Content-Type: application/json
+
+    {
+        "vehicle_id": 2,
+        "acquisition_date":"2015-12-07",
+        "depreciation_date":"2015-12-07",
+        "maintances_cost":300.23,
+        "status": "new"
+    }
+
+###delete one fleet
+DELETE  http://localhost:3000/api/fleet/1
