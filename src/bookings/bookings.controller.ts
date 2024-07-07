@@ -1,25 +1,62 @@
 import { Context } from "hono";
-import { deleteBookingDetails, getBookingDetails, updateBookingDetails } from "./bookings.services";
+import { createBookingDetails, deleteBookingDetails, getBookingDetails, getBookingDetailsByUserId, updateBookingDetails } from "./bookings.services";
+import exp = require("constants");
 
 export const createBooking=async(c: Context)=>{
-    const booking = await c.req.json()
-    return c.json({"result": "Booking created successfully"},201)
+    try {
+        const booking = await c.req.json()
+        const result = await createBookingDetails(booking)
+        return c.json({"result": result})
+    } catch (error: any) {
+        return c.json({"error": error.message})
+    }
 }
 
 export const deleteBooking = async (c: Context)=>{
-    const id = c.req.param('id')
-    const result = await deleteBookingDetails(Number(id))
-    return c.json({"result": result},204)
+    try {
+        const id = c.req.param('id')
+        if(isNaN(Number(id))) return c.json({error: "Invalid id"})
+        const result = await deleteBookingDetails(Number(id))
+        return c.json({"result": result},204)
+    } catch (error: any) {
+        return c.json({"error": error?.message})
+    }
 }
 
 export const updateBooking=async(c: Context)=>{
-    const id = c.req.param('id')
-    const booking = await c.req.json()
-    const result = await updateBookingDetails(Number(id), booking)
-    return c.json({"result": result})
+    try {
+        const id = c.req.param('id')
+        if(isNaN(Number(id))) return c.json({error: "Invalid id"})
+        const booking = await c.req.json()
+        const result = await updateBookingDetails(Number(id), booking)
+        return c.json({"result": result})
+    } catch (error: any) {
+        return c.json({"error": error?.message})
+    }
+}
+
+export const getAllBooking=async(c: Context)=>{
+    try {
+        const query = c.req.query()
+        const limit = query['limit']
+        const details = query['details']
+        const result = await getBookingDetails(Number(limit),Boolean(details))
+        return c.json({"results" : result},200)
+    } catch (error: any) {
+        return c.json({"error": error.message})
+    }
 }
 
 export const getOneBooking=async(c: Context)=>{
-    const result = await getBookingDetails()
-    return c.json({"results" : result},200)
+    try {
+        const id = c.req.param('id')
+        if(isNaN(Number(id))) return c.json({error: "Invalid id"})
+        const query = c.req.query()
+        const details = query['details']
+        const result = await getBookingDetailsByUserId(Number(id),Boolean(details) )
+        if(!result) return c.json({"error": "No booking found with this id"})
+        return c.json({"results": result})
+    } catch (error: any) {
+        return c.json({"error": error?.message})
+    }
 }

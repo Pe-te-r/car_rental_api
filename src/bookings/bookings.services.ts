@@ -17,6 +17,49 @@ export const updateBookingDetails=async(id: number, details: Partial<bookingInse
     return "Booking updated successfully"
 }
 
-export const getBookingDetails= async(): Promise<bookingSelect[] | null>=>{
-    return await db.query.bookingTable.findMany()
+export const getBookingDetails= async(limit: number,details: boolean): Promise<bookingSelect[] | null>=>{
+    if(limit> 0&& details){
+        return await db.query.bookingTable.findMany({
+            limit: limit,
+            with:{
+                user: true,
+                vehicle: true,
+                location: true,
+                payment:true
+            }
+        })
+    }else if(limit > 0 && !details){
+        return await db.query.bookingTable.findMany({
+            limit: limit,
+        })
+    }else if(details){
+        return await db.query.bookingTable.findMany({
+            with:{
+                user: true,
+                vehicle: true,
+                location: true,
+                payment:true
+            }
+        })
+    }else{
+        return await db.query.bookingTable.findMany()
+    }
+}
+
+export const getBookingDetailsByUserId=async(id: number,  details: boolean): Promise<any | null>=>{
+    if(details){
+        return await db.query.bookingTable.findFirst({
+            where:eq(bookingTable.id,id),
+            with:{
+                user: true,
+                vehicle: true,
+                location: true,
+                payment:true
+            }
+        })
+    }else{
+        return await db.query.bookingTable.findFirst({
+            where:eq(bookingTable.id,id),
+        })
+    }
 }
