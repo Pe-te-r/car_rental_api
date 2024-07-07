@@ -1,8 +1,10 @@
 import { Context } from "hono";
 import * as bcrypt from "bcrypt";
-import {  registerUser, storePassword, userExists } from "./auth.services";
+import {  deleteUserFailed, registerUser, storePassword, userExists } from "./auth.services";
 import {  sign} from "hono/jwt"
 import { loginReturnData } from "../types/types";
+import { sendMail } from "../send_mail/SendMail";
+import { deleteUser } from "../users/users.control";
 
 // login
 export const loginController=async(c: Context)=>{
@@ -24,7 +26,6 @@ export const loginController=async(c: Context)=>{
       }
     const secret=process.env.SECRET_KEY as string
     const token= await sign(payload, secret)
-
 
     // login return obct
     const returnData: loginReturnData ={
@@ -60,12 +61,12 @@ export const registerController=async(c: Context)=>{
             return c.json({"error":"User registration failed"},400)
         }
         const storedPass = await storePassword(hashedPassword.toString(),Number(userId[0]['id']))
-        console.log(storedPass)
         if(storedPass){
-            
+            sendMail('register',newUser.email,newUser.name)
             return c.json({'username':newUser.name})
         }else{
-            return c.json({"error":"Password storing failed"},400)
+            await deleteUserFailed(Number(userId[0]['id']))
+            return c.json({"error":"error occured while creating the user"},400)
         }
         
     } catch (error: any) {

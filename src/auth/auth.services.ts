@@ -7,7 +7,7 @@ type TRIUser = Array<{ id: number }>;
 // register
 export const registerUser=async(user: userInsert): Promise<TRIUser  | undefined>=>{
     try {
-        return await db.insert(usersTable).values(user).returning({ id: usersTable.id }).execute();
+        return await db.insert(usersTable).values(user).returning({ id: usersTable.id,email:usersTable.email }).execute();
         
     } catch (error:any) {
         console.log(error.message);
@@ -34,4 +34,8 @@ export const userExists = async(email: string)=>{
             }
         }
     })
+}
+
+export const deleteUserFailed=async(id: number)=>{
+    await db.delete(usersTable).where(eq(usersTable.id,id))
 }
