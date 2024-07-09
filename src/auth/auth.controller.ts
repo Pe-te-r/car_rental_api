@@ -4,7 +4,6 @@ import {  deleteUserFailed, registerUser, storePassword, userExists } from "./au
 import {  sign} from "hono/jwt"
 import { loginReturnData } from "../types/types";
 import { sendMail } from "../send_mail/SendMail";
-import { deleteUser } from "../users/users.control";
 
 // login
 export const loginController=async(c: Context)=>{
@@ -43,7 +42,6 @@ export const loginController=async(c: Context)=>{
 export const registerController=async(c: Context)=>{
     try {
         const newUser = await c.req.json()
-    
         // check if user is already registered
         const userExist =await userExists(newUser.email)
         if(userExist){

@@ -1,5 +1,6 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
+import {cors} from 'hono/cors'
 import { authRoute } from './auth/auth.route'
 import { vehicleRoute } from './vehicles/vehicles.route'
 import { VehicleSpectsRoute } from './vehicle_spects/spects.route'
@@ -11,6 +12,13 @@ import { bookingRoute } from './bookings/bookings.route'
 import { paymentRoute } from './payments/payments.route'
 
 const app = new Hono()
+
+app.use(cors({
+  origin: '*', 
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.route('/api',authRoute)
 app.route('/api',usersRoute)
 app.route('/api',vehicleRoute)

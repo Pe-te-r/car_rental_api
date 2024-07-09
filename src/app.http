@@ -3,8 +3,8 @@ POST  http://localhost:3000/api/register
 Content-Type: application/json
 
     {
-        "name":"phantom",
-        "email":"phantom8526@duck.com",
+        "name":"mburu",
+        "email":"mburupeter@duck.com",
         "contact_phone":"0748200233",
         "password":"12345"
     }
@@ -14,7 +14,7 @@ POST  http://localhost:3000/api/login
 Content-Type: application/json
 
     {
-        "email":"peter@gmail.com",
+        "email":"mburupeter@duck.com",
         "password":"12345"
     }
 
@@ -35,7 +35,7 @@ Content-Type: application/json
         "password":"12345"
     }
 ### Delete one user
-DELETE  http://localhost:3000/api/users/7
+DELETE  http://localhost:3000/api/users/14
 
 
 ###Vehicles
