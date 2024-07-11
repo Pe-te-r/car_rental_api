@@ -1,11 +1,12 @@
 import { Hono } from "hono";
 import { createBooking, deleteBooking, getAllBooking, getOneBooking, updateBooking } from "./bookings.controller";
+import { adminRoleAuth, allRoleAuth } from "../middle_auth/middleware";
 
 
 export const bookingRoute= new Hono()
 
-bookingRoute.get('/bookings/:id', getOneBooking)
-bookingRoute.get('/bookings', getAllBooking)
-bookingRoute.post('/bookings', createBooking)
-bookingRoute.put('/bookings/:id', updateBooking)
-bookingRoute.delete('/bookings/:id',deleteBooking)
+bookingRoute.get('/bookings/:id',adminRoleAuth ,getOneBooking)
+bookingRoute.get('/bookings',allRoleAuth ,getAllBooking)
+bookingRoute.post('/bookings',allRoleAuth ,createBooking)
+bookingRoute.put('/bookings/:id', adminRoleAuth,updateBooking)
+bookingRoute.delete('/bookings/:id',adminRoleAuth,deleteBooking)

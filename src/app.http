@@ -3,8 +3,8 @@ POST  http://localhost:3000/api/register
 Content-Type: application/json
 
     {
-        "name":"mburu",
-        "email":"mburupeter@duck.com",
+        "name":"shakirah",
+        "email":"womanher174@gmail.com",
         "contact_phone":"0748200233",
         "password":"12345"
     }
@@ -19,10 +19,12 @@ Content-Type: application/json
     }
 
 ### Get all users
-GET  http://localhost:3000/api/users
+GET  http://localhost:3000/api/users?details=true
 
 ### Get one users
 GET  http://localhost:3000/api/users/1
+###
+GET  http://localhost:3000/api/users
 
 ### UPdate one user
 PUT http://localhost:3000/api/users/1
@@ -50,7 +52,7 @@ Content-Type: application/json
 
 ### get vehicle
 GET  http://localhost:3000/api/vehicles?details=true
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJyb2xlIjoidXNlciIsImVtYWlsIjoicGV0ZXJAZ21haWwuY29tIiwiZXhwIjoxNzIwMzIxOTUwfQ.C_iL5GQMsbiJrLBSSyJcfcjKe0V0WYXHaX34mKcZiOk
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwicm9sZSI6InVzZXIiLCJlbWFpbCI6Im1idXJ1cGV0ZXJAZHVjay5jb20iLCJleHAiOjE3MjA3MTM5MTV9.7P4kJr8sDUrp-CMpVuSux53JChiJG7fGpwR6zVdk9Rs
 
 ### get one vehicle
 GET  http://localhost:3000/api/vehicles/2?details=true

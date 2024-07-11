@@ -13,7 +13,7 @@ export const getOneUserDetails = async (id: number): Promise<UserSelect | undefi
     })
 }
 
-export const getAllUserDetails=async(limit:number,details:boolean):Promise<UserSelect[] | null> => {
+export const getAllUserDetails=async(limit:number,details:boolean):Promise<Partial<UserSelect>[] | null> => {
     if (limit > 0 && details){
         return await db.query.usersTable.findMany({
             limit: limit,
@@ -35,7 +35,12 @@ export const getAllUserDetails=async(limit:number,details:boolean):Promise<UserS
             }
         })
     }else{
-        return await db.query.usersTable.findMany()
+        return await db.query.usersTable.findMany({
+            columns: {
+                created_at: false,
+                updated_at: false
+            }
+        })
     }
 }
 

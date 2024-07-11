@@ -69,6 +69,5 @@ export const registerController=async(c: Context)=>{
         
     } catch (error: any) {
         return c.json({'error':error?.message})
-        
     }
 }

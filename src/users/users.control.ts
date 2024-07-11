@@ -1,7 +1,6 @@
 
 import { Context } from "hono";
 import { addUserDetails, deletUsersDetails, getAllUserDetails, getOneUserDetails, updateUserDetails } from "./users.services";
-import { any } from "zod";
 
 
 export const getUser=async(c: Context)=>{
@@ -52,6 +51,7 @@ export const updateUser=async(c: Context)=>{
 export const deleteUser=async(c: Context)=>{
     try {
         const id = c.req.param('id')
+        console.log(id)
         if(isNaN(Number(id))) return c.json({"message":"insert a valid id"})
         const results = await deletUsersDetails(Number(id))
         return c.json({'message': results})

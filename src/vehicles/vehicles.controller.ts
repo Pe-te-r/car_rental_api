@@ -32,7 +32,6 @@ export const updateVehicle=async(c: Context)=>{
         return c.json({"result": result})
     } catch (error: any) {
         return c.json({"error": "could not update the vehicle details"})
-        
     }
 }
 
@@ -43,10 +42,9 @@ export const getVehicles=async(c: Context)=>{
         const details = query['details']
         const results =await getVehicleDetails(Number(limit), Boolean(details))
         if(!results) return c.json({"error": "No vehicles found"})
-        return c.json({"results": results},200)
+        return c.json({ results},200)
     } catch (error: any) {
-        return c.json({"error": "unknown error"})
-        
+        return c.json({"error": "unknown error"})   
     }
 }
 
@@ -58,7 +56,7 @@ export const getVehicle=async(c: Context)=>{
         const details = query['details']
         const result = await getVehicleDetail(Number(id),Boolean(details))
         if(!result) return c.json({"error": "No vehicle found with this id"})
-        return c.json({"results": result},200)
+        return c.json({result},200)
     } catch (error: any) {
         return c.json({"error": "unknown error"})
         
