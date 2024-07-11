@@ -3,13 +3,14 @@ POST  http://localhost:3000/api/register
 Content-Type: application/json
 
     {
-        "name":"shakirah",
-        "email":"womanher174@gmail.com",
+        "name":"maina",
+        "email":"maina@gmail.com",
         "contact_phone":"0748200233",
+        "role":"admin",
         "password":"12345"
     }
 
-###login
+###login user user
 POST  http://localhost:3000/api/login
 Content-Type: application/json
 
@@ -17,17 +18,31 @@ Content-Type: application/json
         "email":"mburupeter@duck.com",
         "password":"12345"
     }
+###login admin admin
+POST  http://localhost:3000/api/login
+Content-Type: application/json
+
+    {
+        "email":"maina@gmail.com",
+        "password":"12345"
+    }
+
 
 ### Get all users
 GET  http://localhost:3000/api/users?details=true
-
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwicm9sZSI6InVzZXIiLCJlbWFpbCI6Im1idXJ1cGV0ZXJAZHVjay5jb20iLCJleHAiOjE3MjA3MTM5MTV9.7P4kJr8sDUrp-CMpVuSux53JChiJG7fGpwR6zVdk9Rs
 ### Get one users
-GET  http://localhost:3000/api/users/1
+GET  http://localhost:3000/api/users/15
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwicm9sZSI6InVzZXIiLCJlbWFpbCI6Im1idXJ1cGV0ZXJAZHVjay5jb20iLCJleHAiOjE3MjA3MjkyNzl9.oJIpkeRfkyvuEx-skkIb8OIjRkV1ctQVytF_-nd3tvE
+
+
 ###
-GET  http://localhost:3000/api/users
+GET  http://localhost:3000/api/users/15?details=true
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwicm9sZSI6InVzZXIiLCJlbWFpbCI6Im1idXJ1cGV0ZXJAZHVjay5jb20iLCJleHAiOjE3MjA3MjkyNzl9.oJIpkeRfkyvuEx-skkIb8OIjRkV1ctQVytF_-nd3tvE
 
 ### UPdate one user
 PUT http://localhost:3000/api/users/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwicm9sZSI6InVzZXIiLCJlbWFpbCI6Im1idXJ1cGV0ZXJAZHVjay5jb20iLCJleHAiOjE3MjA3MTYzMDd9.qebZbVSQxPJdrjEOhp70ORbNTqc-oqMmvmupfAsL3LI
 Content-Type: application/json
 
     {
@@ -38,6 +53,7 @@ Content-Type: application/json
     }
 ### Delete one user
 DELETE  http://localhost:3000/api/users/14
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwicm9sZSI6InVzZXIiLCJlbWFpbCI6Im1idXJ1cGV0ZXJAZHVjay5jb20iLCJleHAiOjE3MjA3MTYzMDd9.qebZbVSQxPJdrjEOhp70ORbNTqc-oqMmvmupfAsL3LI
 
 
 ###Vehicles
@@ -53,7 +69,6 @@ Content-Type: application/json
 ### get vehicle
 GET  http://localhost:3000/api/vehicles?details=true
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwicm9sZSI6InVzZXIiLCJlbWFpbCI6Im1idXJ1cGV0ZXJAZHVjay5jb20iLCJleHAiOjE3MjA3MTM5MTV9.7P4kJr8sDUrp-CMpVuSux53JChiJG7fGpwR6zVdk9Rs
-
 ### get one vehicle
 GET  http://localhost:3000/api/vehicles/2?details=true
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJyb2xlIjoidXNlciIsImVtYWlsIjoicGV0ZXJAZ21haWwuY29tIiwiZXhwIjoxNzIwMzIxOTUwfQ.C_iL5GQMsbiJrLBSSyJcfcjKe0V0WYXHaX34mKcZiOk
