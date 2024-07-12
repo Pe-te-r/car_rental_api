@@ -13,6 +13,7 @@ export const verifyToken = async (token: string, secret: string) => {
 
 export const authMiddleware = async (c: Context, next: Next, role: string) => {
   const token = c.req.header("Authorization");
+  console.log(token);
   if (!token) return c.json({ error: "unauthorized no token provided" }, 401);
   const decoded = await verifyToken(token, process.env.SECRET_KEY as string);
   if (!decoded) return c.json({ error: "token not valid" });

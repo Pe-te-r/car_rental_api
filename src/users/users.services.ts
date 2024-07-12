@@ -1,14 +1,37 @@
 import { eq } from "drizzle-orm"
 import db from "../drizzle/db"
 import { UserSelect, userInsert, usersTable } from "../drizzle/schema"
+import { UserDetails } from "../types/types"
 
 
-export const getOneUserDetails = async (id: number): Promise<UserSelect | undefined> => {
+export const getOneUserDetails = async (id: number): Promise<Partial <UserDetails> | undefined> => {
     return await db.query.usersTable.findFirst({
         where: eq(usersTable.id, id),
+        columns:{
+            role:true,
+            id:true,
+            contact_phone:true,
+            email:true,
+            name:true,
+        },
         with:{
-            bookings: true,
-            customerSupportTickets:true
+            bookings: {
+                columns:{
+                    location_id: true,
+                    booking_date: true,
+                    vehicle_id:true,
+                    totalAmount: true,
+                    id: true
+                }
+            },
+            customerSupportTickets:{
+                columns:{
+                    description: true,
+                    status: true,
+                    subject: true,
+                    id: true,
+                }
+            }
         }
     })
 }
