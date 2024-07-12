@@ -8,6 +8,7 @@ import { sendMail } from "../send_mail/SendMail";
 // login
 export const loginController=async(c: Context)=>{
     const userDetails = await c.req.json()
+    console.log(userDetails)
     const userExist = await userExists(userDetails.email)
     console.log(userExist)
     if(!userExist){

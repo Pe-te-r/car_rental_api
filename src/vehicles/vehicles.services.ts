@@ -23,8 +23,23 @@ export const getVehicleDetails= async(limit: number, details: boolean): Promise<
          limit:limit,
          with:{
             bookings: true,
-            vehicleSpecification: true,
-            location:true
+            vehicleSpecification: {
+               columns:{
+                  model:true,
+                  color:true,
+                  fuel_type:true,
+                  manufacturer:true,
+                  engine_capacity:true,
+                  seating_capacity:true,
+               }
+            },
+            location:{
+               columns:{
+                  name:true,
+                  address:true,
+                  contact:true
+               }
+            }
          }
 
        })

@@ -28,6 +28,7 @@ export const updateVehicle=async(c: Context)=>{
         const id = c.req.param('id')
         if(isNaN(Number(id))) return c.json({"message":"Invalid id provided"})
         const vehicle = await c.req.json()
+    console.log(vehicle)
         const result =await updateVehicleDetails(Number(id),vehicle)
         return c.json({"result": result})
     } catch (error: any) {

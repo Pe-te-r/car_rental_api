@@ -5,11 +5,19 @@ import { userLogin, userRegister } from "../validators";
 
 export const authRoute = new Hono()
 
-authRoute.post('/login',zValidator('json',userLogin,(result,c)=>{
-    if(!result.success)return c.json(result.error,400)
-}),  loginController)
-authRoute.post('/register', zValidator('json', userRegister, (result, c) => {
-    if (!result.success) {
-        return c.json(result.error, 400)
-    }
-}), registerController)
+authRoute.post('/login', loginController)
+authRoute.post('/register',  registerController)
+
+
+
+
+
+// zValidator('json',userLogin,(result,c)=>{
+//     if(!result.success)return c.json(result.error,400)
+// }), 
+
+// zValidator('json', userRegister, (result, c) => {
+//     if (!result.success) {
+//         return c.json(result.error, 400)
+//     }
+// }),

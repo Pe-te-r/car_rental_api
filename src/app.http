@@ -31,6 +31,7 @@ Content-Type: application/json
 ### Get all users
 GET  http://localhost:3000/api/users
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwicm9sZSI6ImFkbWluIiwiZW1haWwiOiJtYWluYUBnbWFpbC5jb20iLCJleHAiOjE3MjA3OTkwNTl9.QelDR_BCLiVV9LufLyfz70TnvNiuxOvV5CLXPoOJDsg
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwicm9sZSI6ImFkbWluIiwiZW1haWwiOiJtYWluYUBnbWFpbC5jb20iLCJleHAiOjE3MjA3MzUzNjl9.u5cLOTG8VstoioR-pParmYjNy-Gsibp87jxH0KM5g8I
 ### Get one users
 GET  http://localhost:3000/api/users/25
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNSwicm9sZSI6InVzZXIiLCJlbWFpbCI6IndvbWFuaGVyMTc0QGdtYWlsLmNvbSIsImV4cCI6MTcyMDgwMDA1NX0._hK_6aE8bwm9J_d-LW7-OiPvpkU9-frhP7MjXwvE_Is
