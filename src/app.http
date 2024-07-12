@@ -37,7 +37,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwicm9sZSI6
 
 
 ###
-GET  http://localhost:3000/api/users/15?details=true
+GET  http://localhost:3000/api/users?details=true
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwicm9sZSI6InVzZXIiLCJlbWFpbCI6Im1idXJ1cGV0ZXJAZHVjay5jb20iLCJleHAiOjE3MjA3MjkyNzl9.oJIpkeRfkyvuEx-skkIb8OIjRkV1ctQVytF_-nd3tvE
 
 ### UPdate one user

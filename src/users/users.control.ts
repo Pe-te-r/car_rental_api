@@ -53,6 +53,7 @@ export const updateUser=async(c: Context)=>{
     } catch (error: any) {
         return c.json({'message': "error updating the user details"})
     }
+    
 }
 // controller for updating user details
 export const deleteUser=async(c: Context)=>{
