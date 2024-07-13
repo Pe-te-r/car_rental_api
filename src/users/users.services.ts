@@ -4,7 +4,7 @@ import { UserSelect, userInsert, usersTable } from "../drizzle/schema"
 import { UserDetails } from "../types/types"
 
 
-export const getOneUserDetails = async (id: number): Promise<Partial <UserDetails> | undefined> => {
+export const getOneUserDetails = async (id: number): Promise<Partial<any> | undefined> => {
     return await db.query.usersTable.findFirst({
         where: eq(usersTable.id, id),
         columns:{
@@ -16,12 +16,41 @@ export const getOneUserDetails = async (id: number): Promise<Partial <UserDetail
         },
         with:{
             bookings: {
+                with:{
+                    vehicle:{
+                        columns:{
+                            availability:true
+                        },
+                        with:{
+                            vehicleSpecification:{
+                                columns:{
+                                    model: true,
+                                    color: true,
+                                    fuel_type: true,
+                                    manufacturer: true,
+                                    engine_capacity: true,
+                                    seating_capacity: true,
+                                }
+                            },
+                            location:{
+                                columns:{
+                                    name: true,
+                                    address: true,
+                                    contact: true,
+                                }
+                            }
+
+                        }
+                    }
+                },
                 columns:{
-                    location_id: true,
+                    // location_id: true,
                     booking_date: true,
-                    vehicle_id:true,
+                    // vehicle_id:true,
                     totalAmount: true,
-                    id: true
+                    // id: true,
+                    return_date:true,
+                    status:true,
                 }
             },
             customerSupportTickets:{

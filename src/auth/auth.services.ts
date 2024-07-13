@@ -36,6 +36,7 @@ export const userExists = async(email: string)=>{
     })
 }
 
+
 export const deleteUserFailed=async(id: number)=>{
     await db.delete(usersTable).where(eq(usersTable.id,id))
 }
