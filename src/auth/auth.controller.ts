@@ -26,8 +26,8 @@ export const loginController=async(c: Context)=>{
       }
     const secret=process.env.SECRET_KEY as string
     const token= await sign(payload, secret)
-
-    // login return obct
+    
+    // login return object
     const returnData: loginReturnData ={
         id:userExist.id,
         name:userExist.name,

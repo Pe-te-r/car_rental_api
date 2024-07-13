@@ -68,7 +68,7 @@ Content-Type: application/json
     }
 
 ### get vehicle
-GET  http://localhost:3000/api/vehicles?details=true
+GET  http://localhost:3000/api/vehicles?limit=1&details=true
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwicm9sZSI6InVzZXIiLCJlbWFpbCI6Im1idXJ1cGV0ZXJAZHVjay5jb20iLCJleHAiOjE3MjA3MTM5MTV9.7P4kJr8sDUrp-CMpVuSux53JChiJG7fGpwR6zVdk9Rs
 ### get one vehicle
 GET  http://localhost:3000/api/vehicles/2?details=true
@@ -83,10 +83,10 @@ Content-Type: application/json
         "availability":false
     }
 ###delet vehicles details
-DELETE  http://localhost:3000/api/vehicles/1
+DELETE  http://localhost:3000/api/vehicles/
 
 ### get Vehicle-specific information
-GET  http://localhost:3000/api/vehicle-spects?limit=2&&details=true
+GET  http://localhost:3000/api/vehicle-spects?limit=4&&details=true
 
 ### get one car details specific
 GET  http://localhost:3000/api/vehicle-spects/2?details=true
@@ -113,17 +113,18 @@ Content-Type: application/json
 POST http://localhost:3000/api/vehicle-spects
 Content-Type: application/json
 
-    {
-        "vehicle_specsTable_id":1,
-        "manufacturer":"toyota",
-        "model":"corolla",
-        "year":2018,
-        "color":"blue",
-        "fuel_type":"petrol",
-        "engine_capacity":"10",
-        "transmission_capacity":"manual",
-        "seating_capacity":"10"
-    }
+   {
+    "vehicle_specsTable_id":5,
+    "manufacturer": "Tesla",
+    "model": "Model S",
+    "year": 2021,
+    "color": "white",
+    "fuel_type": "electric",
+    "engine_capacity": "N/A",
+    "transmission_capacity": "auto",
+    "seating_capacity": 5
+}
+
 
 
 ### locations
