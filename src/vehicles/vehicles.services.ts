@@ -22,22 +22,22 @@ export const getVehicleDetails= async(limit: number, details: boolean): Promise<
       return await db.query.vehiclesTable.findMany({
          limit:limit,
          with:{
-            bookings: true,
+            // bookings: true,
             vehicleSpecification: {
                columns:{
-                  model:true,
-                  color:true,
-                  fuel_type:true,
+                  // model:true,
+                  // color:true,
+                  // fuel_type:true,
                   manufacturer:true,
-                  engine_capacity:true,
+                  // engine_capacity:true,
                   seating_capacity:true,
                }
             },
             location:{
                columns:{
                   name:true,
-                  address:true,
-                  contact:true
+                  // address:true,
+                  // contact:true
                }
             }
          }

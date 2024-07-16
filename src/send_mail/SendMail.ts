@@ -1,9 +1,10 @@
 import * as nodemailer from 'nodemailer';
 import 'dotenv/config';
 import * as path from 'path';
-import * as hbs  from 'nodemailer-express-handlebars';
+const hbs = require('nodemailer-express-handlebars');
 
-export const sendMail = async (template: string,receiver: string, subject: string,username?: string) => {
+
+export const sendMail = async (template: string, receiver: string, subject: string, username?: string) => {
   // Create a transporter object using the Gmail SMTP transport
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -28,7 +29,7 @@ export const sendMail = async (template: string,receiver: string, subject: strin
   console.log('Resolved viewPath:', path.join(__dirname, 'views'));
 
   // Attach the handlebars plugin to the nodemailer transporter
-  transporter.use('compile',hbs(hbsOptions as any))
+  transporter.use('compile', hbs(hbsOptions));
 
   // Define email options
   const mailOptions = {
@@ -36,9 +37,9 @@ export const sendMail = async (template: string,receiver: string, subject: strin
     to: receiver,
     subject: subject,
     template: template,
-    context:{
-      username:username
-    } 
+    context: {
+      username: username
+    }
   };
   
   // Send email

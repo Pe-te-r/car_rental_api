@@ -24,7 +24,7 @@ export const loginController=async(c: Context)=>{
         email:userExist.email,
         exp:Math.floor(Date.now()/1000)+(60*270)
       }
-      
+
     const secret=process.env.SECRET_KEY as string
     const token= await sign(payload, secret)
     
@@ -62,8 +62,12 @@ export const registerController=async(c: Context)=>{
         }
         const storedPass = await storePassword(hashedPassword.toString(),Number(userId[0]['id']))
         if(storedPass){
-            // sendMail('register',newUser.email,"car rental registration",newUser.name)
-            return c.json({'username':newUser.name})
+            try {
+                sendMail('register',newUser.email,"car rental registration",newUser.name)
+                return c.json({'name':newUser.name})
+            } catch (error) {
+                return c.json('email not sent but logined well')
+            }
         }else{
             await deleteUserFailed(Number(userId[0]['id']))
             return c.json({"error":"error occured while creating the user"},400)
