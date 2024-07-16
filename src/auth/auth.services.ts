@@ -14,7 +14,7 @@ export const registerUser=async(user: userInsert): Promise<TRIUser  | undefined>
     }
      
 }
-// login
+// store password
 export const storePassword = async(passwrod: string,id: number): Promise<boolean>=>{
     try{
         await db.insert(authenicationTable).values({password:passwrod,user_id:id});

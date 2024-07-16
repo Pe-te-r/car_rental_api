@@ -46,8 +46,9 @@ export const updateUser=async(c: Context)=>{
         if(isNaN(Number(id))) return c.json({"message":"insert a valid id"})
         const token = c.req.header("Authorization");
         const decoded = await verifyToken(token!,process.env.SECRET_KEY!)
-        if(decoded?.user_id !== id && decoded?.role != 'admin') return c.json({ "msg": "cannot update this details"})
+        if(Number(decoded?.user_id) !== Number(id) && decoded?.role != 'admin') return c.json({ "msg": "cannot update this details"})
         const newDetails= await c.req.json()
+    console.log(newDetails)
         const results = await updateUserDetails(Number(id),newDetails)
         return c.json({'message': results})
     } catch (error: any) {
@@ -61,9 +62,11 @@ export const deleteUser=async(c: Context)=>{
         const id = c.req.param('id')
         const token = c.req.header("Authorization");
         const decoded= await verifyToken(token as string,process.env.SECRET_KEY as string);
-        if(Number(decoded?.user_id && decoded?.role !== "admin") !== Number(id) || !decoded) return c.json("cannot delete another user")
+        console.log(decoded)
         if(isNaN(Number(id))) return c.json({"message":"insert a valid id"})
+        if(decoded?.user_id !== id && decoded?.role != 'admin') return c.json({ "msg": "cannot update this details"})
         const results = await deletUsersDetails(Number(id))
+    // console.log(results)
         return c.json({'message': results})
     } catch (error: any) {
         return c.json({"message":"Error deleting user"})
