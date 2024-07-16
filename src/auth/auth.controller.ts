@@ -22,8 +22,9 @@ export const loginController=async(c: Context)=>{
         user_id:userExist.id,
         role:userExist.role,
         email:userExist.email,
-        exp:Math.floor(Date.now()/1000)+(60*180)
+        exp:Math.floor(Date.now()/1000)+(60*270)
       }
+      
     const secret=process.env.SECRET_KEY as string
     const token= await sign(payload, secret)
     
@@ -61,7 +62,7 @@ export const registerController=async(c: Context)=>{
         }
         const storedPass = await storePassword(hashedPassword.toString(),Number(userId[0]['id']))
         if(storedPass){
-            sendMail('register',newUser.email,"car rental registration",newUser.name)
+            // sendMail('register',newUser.email,"car rental registration",newUser.name)
             return c.json({'username':newUser.name})
         }else{
             await deleteUserFailed(Number(userId[0]['id']))

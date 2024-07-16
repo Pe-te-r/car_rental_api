@@ -35,10 +35,34 @@ export const getBookingDetails= async(limit: number,details: boolean): Promise<b
     }else if(details){
         return await db.query.bookingTable.findMany({
             with:{
-                user: true,
-                vehicle: true,
-                location: true,
-                payment:true
+                user:{
+                    columns:{
+                      name:true,
+                      email:true,
+                      contact_phone:true,  
+                    }
+                },
+                vehicle: {
+                    with:{
+                        vehicleSpecification:{
+                            columns:{
+                                manufacturer:true,
+                                model:true,
+                            }
+                        }
+                    }
+                },
+                location:{
+                    columns:{
+                        name:true,
+                        contact:true,
+                    }
+                },
+                payment:{
+                    columns:{
+                        payment_status:true,
+                    }
+                }
             }
         })
     }else{
