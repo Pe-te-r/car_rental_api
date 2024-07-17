@@ -17,10 +17,15 @@ export const updateVehicleDetails=async(id: number, vehicleDetails: Partial<vehi
    return "Vehicle updated successfully"
 }
 
-export const getVehicleDetails= async(limit: number, details: boolean): Promise<VehicleSelect[] | null>=>{
+export const getVehicleDetails= async(limit: number, details: boolean): Promise<any[] | null>=>{
    if(limit>0 && details){
       return await db.query.vehiclesTable.findMany({
          limit:limit,
+         columns:{
+            availability:true,
+            rental_rate:true,
+            vehicle_id:true,
+         },
          with:{
             // bookings: true,
             vehicleSpecification: {
@@ -49,11 +54,27 @@ export const getVehicleDetails= async(limit: number, details: boolean): Promise<
        })
    }else if(details){
       return await db.query.vehiclesTable.findMany({
+         columns:{
+            availability:true,
+            rental_rate:true,
+            vehicle_id:true,
+            
+         },
          with:{
-            bookings: true,
-            vehicleSpecification: true,
-            location: true,
-            fleetManagementRecords:true
+            // bookings:{},
+            vehicleSpecification:{
+               columns:{
+                  model:true,
+                  manufacturer:true,
+               }
+            },
+            location:{
+               columns:{
+                  // contact:true,
+                  name:true,
+               },
+            },
+            // fleetManagementRecords:true
          }
        })
    }else{
@@ -66,12 +87,18 @@ export const getVehicleDetail=async(id: number,details:boolean): Promise<any | n
       return await db.query.vehiclesTable.findFirst({
          where:eq(vehiclesTable.vehicle_id,id),
          with:{
-            bookings: true,
-            vehicleSpecification: true,
-            fleetManagementRecords: true,
+            // bookings: true,
+            vehicleSpecification:{
+               columns:{
+                  vehicle_specsTable_id:false,
+               }
+            },
+            // fleetManagementRecords: true,
             location: {
                columns:{
-                  name:true
+                  // name:true,
+                  id:false,
+
                }
             }
          }
@@ -81,5 +108,5 @@ export const getVehicleDetail=async(id: number,details:boolean): Promise<any | n
       return await db.query.vehiclesTable.findFirst({
          where:eq(vehiclesTable.vehicle_id,id)
        })
-   }
+      }
 }
