@@ -55,9 +55,10 @@ export const getVehicleDetails= async(limit: number, details: boolean): Promise<
    }else if(details){
       return await db.query.vehiclesTable.findMany({
          columns:{
-            availability:true,
-            rental_rate:true,
-            vehicle_id:true,
+            // availability:true,
+            // rental_rate:true,
+            // vehicle_id:true,
+            location_id:false,
             
          },
          with:{
@@ -66,15 +67,14 @@ export const getVehicleDetails= async(limit: number, details: boolean): Promise<
                columns:{
                   model:true,
                   manufacturer:true,
+                  seating_capacity:true,
                }
             },
             location:{
                columns:{
-                  // contact:true,
                   name:true,
                },
             },
-            // fleetManagementRecords:true
          }
        })
    }else{
