@@ -78,7 +78,7 @@ export const createPaymentService = () => {
             },
           ],
           mode: "payment",
-          success_url: `${process.env.FRONTEND_URL}/booking-success`,
+          success_url: `${process.env.FRONTEND_URL}/dashboard`,
           cancel_url: `${process.env.FRONTEND_URL}/booking-cancelled`,
           metadata: {
             bookingId: bookingId.toString(),
@@ -111,83 +111,3 @@ export const createPaymentService = () => {
       }
 }}
 
-
-
-
-// const stripe = new Stripe(process.env.STRIPE as string, {
-//     apiVersion: '2024-06-20',
-// });
-
-// export const createPaymentIntent = async (amount: number, currency: string, booking_id: number) => {
-//     const paymentIntent = await stripe.paymentIntents.create({
-//         amount,
-//         currency,
-//     });
-
-//     await db.insert(paymentTable).values({
-//         booking_id,
-//         amount,
-//         payment_status: 'Pending',
-//         payment_method: 'card',
-//         transaction_id: paymentIntent.id,
-//     }).execute();
-
-//     return paymentIntent;
-// };
-
-// export const createCheckoutSession = async (amount: number, currency: string, booking_id: number) => {
-//     const session = await stripe.checkout.sessions.create({
-//         payment_method_types: ['card'],
-//         line_items: [
-//             {
-//                 price_data: {
-//                     currency: currency,
-//                     product_data: {
-//                         name: 'Car rental',
-//                     },
-//                     unit_amount: Math.round(amount),
-//                 },
-//                 quantity: 1,
-//             },
-//         ],
-//         mode: 'payment',
-//         success_url: process.env.SUCCESS_URL as string,
-//         cancel_url: process.env.CANCEL_URL as string,
-//     });
-
-//     await db.insert(paymentTable).values({
-//         booking_id,
-//         amount,
-//         payment_status: 'Pending',
-//         payment_method: 'card',
-//         transaction_id: session.id,
-//     }).execute();
-
-//     return session;
-// };
-
-// export const handleWebhook = async (payload: string, sig: string, webhookSecret: string) => {
-//     try {
-//         const event = stripe.webhooks.constructEvent(payload, sig, webhookSecret);
-//         if (event.type === 'checkout.session.completed') {
-//             const session = event.data.object as Stripe.Checkout.Session;
-
-//             await db.update(paymentTable).set({
-//                 payment_status: 'Succeeded',
-//                 payment_date: new Date(session.created * 1000).toISOString(),
-//             }).where(eq(paymentTable.transaction_id, session.id)).execute();
-
-//             const payment = await db.query.paymentTable.findFirst({
-//                 where: eq(paymentTable.transaction_id, session.id)});
-//             if (payment) {
-//                 await db.update(bookingsTable).set({
-//                     booking_status: 'Succeeded',
-//                 }).where(eq(bookingsTable.booking_id, payment.booking_id)).execute();
-//             }
-//         }
-//         return event;
-
-//     } catch (err: any) {
-//         throw new Error(Webhook Error: ${err.message});
-//     }
-// };
