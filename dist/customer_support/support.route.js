@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.supportRoute = void 0;
+const hono_1 = require("hono");
+const support_controller_1 = require("./support.controller");
+const middleware_1 = require("../middle_auth/middleware");
+exports.supportRoute = new hono_1.Hono();
+exports.supportRoute.get('/support', middleware_1.allRoleAuth, support_controller_1.getSupport);
+exports.supportRoute.get('/support/:id', middleware_1.allRoleAuth, support_controller_1.getOneSupport);
+exports.supportRoute.post('/support', middleware_1.allRoleAuth, support_controller_1.createSupport);
+exports.supportRoute.put('/support/:id', middleware_1.allRoleAuth, support_controller_1.updateSupport);
+exports.supportRoute.delete('/support/:id', middleware_1.adminRoleAuth, support_controller_1.deleteSupport);

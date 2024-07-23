@@ -1,6 +1,7 @@
 import { Context, Next } from "hono";
 import { verify } from "hono/jwt";
 import "dotenv/config";
+import { decode } from "punycode";
 
 export const verifyToken = async (token: string, secret: string) => {
   try {
@@ -10,7 +11,6 @@ export const verifyToken = async (token: string, secret: string) => {
     return null;
   }
 };
-
 export const authMiddleware = async (c: Context, next: Next, role: string) => {
   const token = c.req.header("Authorization");
   if (!token) return c.json({ error: "unauthorized no token provided" }, 401);

@@ -48,7 +48,6 @@ export const updateUser=async(c: Context)=>{
         const decoded = await verifyToken(token!,process.env.SECRET_KEY!)
         if(Number(decoded?.user_id) !== Number(id) && decoded?.role != 'admin') return c.json({ "msg": "cannot update this details"})
         const newDetails= await c.req.json()
-    console.log(newDetails)
         const results = await updateUserDetails(Number(id),newDetails)
         return c.json({'message': results})
     } catch (error: any) {

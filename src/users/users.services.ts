@@ -19,7 +19,8 @@ export const getOneUserDetails = async (id: number): Promise<Partial<any> | unde
                 with:{
                     vehicle:{
                         columns:{
-                            availability:true
+                            availability:true,
+                            vehicle_id:true,
                         },
                         with:{
                             vehicleSpecification:{
@@ -98,15 +99,15 @@ export const getAllUserDetails=async(limit:number,details:boolean):Promise<Parti
 
 export const addUserDetails=async(user: userInsert): Promise<string>=>{
         await db.insert(usersTable).values(user)
-        return "User added successfully"
+        return "added"
 }
 
 export const deletUsersDetails=async(id: number): Promise<string>=>{
         await db.delete(usersTable).where(eq(usersTable.id, id ))
-        return "User deleted successfully"
+        return "deleted"
 }
 
 export const updateUserDetails=async(id: number, user: Partial<userInsert>): Promise<string>=>{
         await db.update(usersTable).set(user).where(eq(usersTable.id, id ))
-        return "User updated successfully"
+        return "updated"
     }

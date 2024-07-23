@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.vehicleRoute = void 0;
+const hono_1 = require("hono");
+const vehicles_controller_1 = require("./vehicles.controller");
+const middleware_1 = require("../middle_auth/middleware");
+exports.vehicleRoute = new hono_1.Hono();
+exports.vehicleRoute.get('/vehicles', vehicles_controller_1.getVehicles);
+exports.vehicleRoute.get('/vehicles/:id', vehicles_controller_1.getVehicle);
+exports.vehicleRoute.post('/vehicles', middleware_1.adminRoleAuth, vehicles_controller_1.createVehicle);
+exports.vehicleRoute.put('/vehicles/:id', middleware_1.adminRoleAuth, vehicles_controller_1.updateVehicle);
+exports.vehicleRoute.delete('/vehicles/:id', middleware_1.adminRoleAuth, vehicles_controller_1.deleteVehicle);

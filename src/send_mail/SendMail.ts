@@ -51,3 +51,7 @@ export const sendMail = async (template: string, receiver: string, subject: stri
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
   });
 };
+
+
+
+

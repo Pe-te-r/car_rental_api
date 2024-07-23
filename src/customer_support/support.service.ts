@@ -5,17 +5,17 @@ import exp = require("constants");
 
 export const createSupportDetail =async(supportDetailsValue: customer_supportInsert): Promise<string>=>{
     await db.insert(customer_support).values(supportDetailsValue)
-    return 'support created successfully'
+    return 'success'
 }
 
 export const deleteSupportDetails= async(id: number): Promise<string>=>{
     await db.delete(customer_support).where(eq(customer_support.id,id))
-    return 'Support deleted successfully'
+    return 'success'
 }
 
 export const updateSupportDetails=async(id: number, supportDetailsValue: Partial<customer_supportInsert>): Promise<string>=>{
     await db.update(customer_support).set(supportDetailsValue).where(eq(customer_support.id, id))
-    return 'Support updated successfully'
+    return 'success'
 }
 
 export const getSupportDetails= async(limit: number,details: boolean): Promise<customer_supportSelect[] | null>=>{
@@ -44,6 +44,7 @@ export const getSupportDetails= async(limit: number,details: boolean): Promise<c
 
 export const getOneSupportDetails=async(id: number, details: boolean): Promise<any | null>=>{
     if(details){
+        console.log('here')
         return await db.query.customer_support.findFirst({
             where:eq(customer_support.id,id),
             with:{

@@ -1,19 +1,17 @@
 import { Context } from "hono";
-import { createBookingDetails, deleteBookingDetails, getBookingDetails, getBookingDetailsByUserId, updateBookingDetails } from "./bookings.services";
-import { checkVehicleAvailability } from "./carAvailability";
-
-export const createBooking=async(c: Context)=>{
+import { createBookingDetails, getBookingSearchResults,deleteBookingDetails, getBookingDetails, getBookingDetailsByUserId, updateBookingDetails } from "./bookings.services";
+import { createPaymentService } from "../payments/payment.services";
+// import { checkVehicleAvailability } from "./carAvailability";
+export const createBooking = async (c: Context) => {
     try {
-        const booking = await c.req.json()
-        const available = await checkVehicleAvailability(booking['vehicle_id']);
-        if(!available['availability']) return c.json({"error": "Vehicle not available"})
-        const result = await createBookingDetails(booking)
-        return c.json({"result": result})
+      const booking = await c.req.json();
+      const result = await createBookingDetails(booking);
+      const bookingId = result[0]['id']; 
+      return c.json({id: bookingId });
     } catch (error: any) {
-        return c.json({"error": error.message})
+      return c.json({ error: error.message });
     }
-}
-
+  };
 
 export const deleteBooking = async (c: Context)=>{
     try {
@@ -61,5 +59,15 @@ export const getOneBooking=async(c: Context)=>{
         return c.json({"results": result})
     } catch (error: any) {
         return c.json({"error": error?.message})
+    }
+}
+
+export const getBookingSearch=async(c: Context)=>{
+    try {
+        const vehicle_id= c.req.param('id')
+        const result = await getBookingSearchResults(Number(vehicle_id))
+        return c.json({"results": result})
+    } catch (error: any) {
+        console.error(error?.message)
     }
 }

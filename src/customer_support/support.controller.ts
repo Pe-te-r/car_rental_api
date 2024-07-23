@@ -4,8 +4,10 @@ import { createSupportDetail, deleteSupportDetails, getOneSupportDetails, getSup
 export const createSupport =async(c: Context)=>{
     try {
         const support = await c.req.json()
+        console.log(support)
         const results = await createSupportDetail(support)
-        return c.json({"result": results},201)
+        console.log(results)
+        return c.json({"results": results},200)
     } catch (error: any) {
         return c.json({"error": error.message})
     }
@@ -16,21 +18,23 @@ export const deleteSupport = async (c: Context)=>{
         const id = c.req.param('id')
         if(isNaN(Number(id))) return c.json({error: "Invalid id"})
         const results = await deleteSupportDetails(Number(id))
-        return c.json({"result": results})
+        return c.json({"results": results})
     } catch (error: any) {
-        return c.json({error: error.message})
+        return c.json({error: 'delete error'})
     }
 }
 
 export const updateSupport=async(c: Context)=>{
     try {
         const id = c.req.param('id')
+    console.log(id)
         if(isNaN(Number(id))) return c.json({error: "Invalid id"})
         const support = await c.req.json()
+    console.log(support)
         const results = await updateSupportDetails(Number(id), support)
-        return c.json({"result": results})
+        return c.json({"results": results})
     } catch (error: any) {
-        return c.json({ error: error?.message })
+        return c.json({ error: 'update error' })
     }
 }
 
@@ -42,7 +46,7 @@ export const getSupport=async(c: Context)=>{
         const results = await getSupportDetails(Number(limit),Boolean(details))
         return c.json({"results": results})
     } catch (error: any) {
-        return c.json({"error": error?.message})    
+        return c.json({"error": 'error'})    
     }
 }
 
@@ -52,10 +56,11 @@ export const getOneSupport=async(c: Context)=>{
         if(isNaN(Number(id))) return c.json({"error": "Invalid id"})
         const query = c.req.query()
         const details = query['details']
+        console.log(details)
         const result = await getOneSupportDetails(Number(id), Boolean(details))
         if(!result) return c.json({"error": "No support service found with this id"})
-        return c.json({"result": result})
+        return c.json({"results": result})
     } catch (error: any) {
-        return c.json({"error": error?.message})
+        return c.json({"error": 'error'})
     }
 }

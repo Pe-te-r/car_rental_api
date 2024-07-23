@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.bookingRoute = void 0;
+const hono_1 = require("hono");
+const bookings_controller_1 = require("./bookings.controller");
+const middleware_1 = require("../middle_auth/middleware");
+exports.bookingRoute = new hono_1.Hono();
+exports.bookingRoute.get('/bookings/:id', middleware_1.adminRoleAuth, bookings_controller_1.getOneBooking);
+exports.bookingRoute.get('/bookings', middleware_1.allRoleAuth, bookings_controller_1.getAllBooking);
+exports.bookingRoute.post('/bookings', middleware_1.allRoleAuth, bookings_controller_1.createBooking);
+exports.bookingRoute.put('/bookings/:id', middleware_1.adminRoleAuth, bookings_controller_1.updateBooking);
+exports.bookingRoute.delete('/bookings/:id', middleware_1.adminRoleAuth, bookings_controller_1.deleteBooking);
+exports.bookingRoute.get('/bookings/search/:id', middleware_1.allRoleAuth, bookings_controller_1.getBookingSearch);

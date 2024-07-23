@@ -14,9 +14,10 @@ export const createLocation=async(c: Context)=>{
 export const deleteLocation=async(c: Context)=>{
     try {
         const id = c.req.param('id')
+        console.log(id)
         if(isNaN(Number(id))) return c.json({error: "Invalid id"})
         const result = await deleteLocationsDetails(Number(id))
-        return c.json({result: result}, 204)
+        return c.json({result: result},200)
     } catch (error: any) {
         return c.json({error: error.message}, 500)        
     }

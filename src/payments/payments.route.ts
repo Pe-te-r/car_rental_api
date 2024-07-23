@@ -6,6 +6,12 @@ export const paymentRoute = new Hono()
 
 paymentRoute.get('/payment',allRoleAuth ,getPayment)
 paymentRoute.get('/payment/:id',allRoleAuth, getOnePayment)
-paymentRoute.post('/payment',allRoleAuth,createPayment)
+// paymentRoute.post('/payment',allRoleAuth,createPayment)
 paymentRoute.put('/payment/:id',allRoleAuth,updatePayment)
 paymentRoute.delete('/payment',adminRoleAuth,deletePayament)
+
+
+paymentRoute.post(
+    "/payment",
+    createPayment.createCheckoutSession
+  );

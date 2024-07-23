@@ -1,15 +1,17 @@
 import { Context } from "hono";
-import { createPaymentDetails, deletePayamentDetails, getOnePaymentDetails, getPaymentDetails, updatePaymentDetails } from "./payment.services";
+import { createPaymentDetails, createPaymentService, deletePayamentDetails, getOnePaymentDetails, getPaymentDetails, updatePaymentDetails } from "./payment.services";
+import Stripe from "stripe";
+import { ClientURL } from "./utils";
 
-export const createPayment = async (c: Context)=>{
-    try {
-        const data =await c.req.json()
-        const result = await createPaymentDetails(data)
-        return c.json({"result": result},201)
-    } catch (error: any) {
-        return c.json({"error": error?.message})
-    }
-}
+// export const createPayment = async (c: Context)=>{
+//     try {
+//         const data =await c.req.json()
+//         const result = await createPaymentDetails(data)
+//         return c.json({"result": result},201)
+//     } catch (error: any) {
+//         return c.json({"error": error?.message})
+//     }
+// }
 
 export const deletePayament=async(c: Context)=>{
     try {
@@ -59,3 +61,30 @@ export const getOnePayment=async(c: Context)=>{
         return c.json({"error": error?.message})
     }
 }
+
+
+
+const paymentService = createPaymentService();
+
+export const createPayment = {
+    async createCheckoutSession(c: Context) {
+      try {
+        const { bookingId, amount } = await c.req.json();
+        console.log(
+          `Check if id and amount is being received: ${bookingId}, amount: ${amount}`
+        );
+  
+        const session = await paymentService.createCheckoutSession(
+          bookingId,
+          amount
+        );
+  
+        return c.json({ sessionId: session.id , checkoutUrl: session.url});
+      } catch (error) {
+        console.error("Error creating checkout session:", error);
+        return c.json(
+          { success: false, error: "Failed to create checkout session" },
+          500
+        );
+      }
+    }}

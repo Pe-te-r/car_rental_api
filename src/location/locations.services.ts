@@ -7,17 +7,17 @@ import exp = require("constants");
  
 export const createLocationsDetails=async(locations: locationInsert): Promise<string>=>{
     await db.insert(locationTable).values(locations)
-    return "location created successfully"
+    return "success"
 }
 
 export const deleteLocationsDetails=async(id: number): Promise<string>=>{
     await db.delete(locationTable).where(eq(locationTable.id,id))
-    return "deleted successfully"
+    return "success"
 }
 
 export const updateLocationsDetails=async(id:number,newDetails: Partial<locationInsert>): Promise<string>=>{
     await db.update(locationTable).set(newDetails).where(eq(locationTable.id,id))
-    return "updated successfully"
+    return "success"
 }
 
 export const getLocationsDetails=async(limit: number,details: boolean): Promise<locationSelect[] | null>=>{

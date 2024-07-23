@@ -3,9 +3,11 @@ import db from "../drizzle/db";
 import { vehicle_specsInsert, vehicle_specsSelect, vehicle_specsTable } from "../drizzle/schema";
 import exp = require("constants");
 
+
 export const createSpectDetails=async(spects: vehicle_specsInsert): Promise<string> => {
     await db.insert(vehicle_specsTable).values(spects)
-    return "spects created successfully"
+    return 'success'
+    
 }
 
 export const deleteSpectDetails=async(id: number): Promise<string> => {
@@ -15,7 +17,7 @@ export const deleteSpectDetails=async(id: number): Promise<string> => {
 
 export const updateSpectDetails=async(id: number, spects: Partial<vehicle_specsInsert>): Promise<string> => {
     await db.update(vehicle_specsTable).set(spects).where(eq(vehicle_specsTable.vehicle_specsTable_id,id))
-    return "spects updated successfully"
+    return "success"
 }
 
 export const getSpectDetails= async(limit:number,details: boolean): Promise<vehicle_specsSelect[] | null> => {

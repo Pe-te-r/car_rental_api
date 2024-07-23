@@ -2,19 +2,25 @@ import { eq } from "drizzle-orm";
 import db from "../drizzle/db";
 import { VehicleSelect, vehicleInsert, vehiclesTable } from "../drizzle/schema";
 
-export const createVehicleDetails=async(vehicleDetails: vehicleInsert): Promise<string>=>{
-   await db.insert(vehiclesTable).values(vehicleDetails)
-   return "Vehicle created successfully"
+type TRVehicle = Array<{ id: number }>;
+
+export const createVehicleDetails=async(vehicleDetails: vehicleInsert): Promise<TRVehicle> => {
+   const id =await db.insert(vehiclesTable).values(vehicleDetails).returning({id: vehiclesTable.vehicle_id}).execute()
+   if (id && id.length > 0 && id[0].id) {
+       return [{ id: id[0].id }];
+   } else {
+       throw new Error("Failed to retrieve the inserted id");
+   }
 }
 
 export const deleteVehicleDetails=async(id: number): Promise<string>=>{
    await db.delete(vehiclesTable).where(eq(vehiclesTable.vehicle_id,id))
-   return "Vehicle deleted successfully"
+   return "success"
 }
 
 export const updateVehicleDetails=async(id: number, vehicleDetails: Partial<vehicleInsert>): Promise<string>=>{
    await db.update(vehiclesTable).set(vehicleDetails).where(eq(vehiclesTable.vehicle_id,id))
-   return "Vehicle updated successfully"
+   return "success"
 }
 
 export const getVehicleDetails= async(limit: number, details: boolean): Promise<any[] | null>=>{
@@ -87,22 +93,20 @@ export const getVehicleDetail=async(id: number,details:boolean): Promise<any | n
       return await db.query.vehiclesTable.findFirst({
          where:eq(vehiclesTable.vehicle_id,id),
          with:{
-            // bookings: true,
+            bookings:{
+               columns:{
+                  booking_date:true,
+                  return_date:true,
+               }
+            },
             vehicleSpecification:{
                columns:{
                   vehicle_specsTable_id:false,
                }
             },
             // fleetManagementRecords: true,
-            location: {
-               columns:{
-                  // name:true,
-                  id:false,
-
-               }
-            }
+            location: true,
          }
- 
       })
    }else{
       return await db.query.vehiclesTable.findFirst({

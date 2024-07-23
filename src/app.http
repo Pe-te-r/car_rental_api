@@ -15,7 +15,7 @@ POST  http://localhost:3000/api/login
 Content-Type: application/json
 
     {
-        "email":"mburupeter@duck.com",
+        "email":"maina@gmail.com",
         "password":"12345"
     }
 ###login admin admin
@@ -53,8 +53,8 @@ Content-Type: application/json
         "password":"12345"
     }
 ### Delete one user
-DELETE  http://localhost:3000/api/users/14
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNSwicm9sZSI6InVzZXIiLCJlbWFpbCI6Im1idXJ1cGV0ZXJAZHVjay5jb20iLCJleHAiOjE3MjA3MTYzMDd9.qebZbVSQxPJdrjEOhp70ORbNTqc-oqMmvmupfAsL3LI
+DELETE  http://localhost:3000/api/users/4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2Nywicm9sZSI6ImFkbWluIiwiZW1haWwiOiJtYWluYUBnbWFpbC5jb20iLCJleHAiOjE3MjE3MDkxMzV9.9IX3ECgvScbSFxvlmsVWZf4YAGlRJdaq4aXGJjqn3DU
 
 
 ###Vehicles
@@ -89,13 +89,13 @@ DELETE  http://localhost:3000/api/vehicles/
 GET  http://localhost:3000/api/vehicle-spects?limit=4&&details=true
 
 ### get one car details specific
-GET  http://localhost:3000/api/vehicle-spects/2?details=true
+GET  http://localhost:3000/api/vehicle-spects
 
 ### delete one car vehicle details specific
 DELETE  http://localhost:3000/api/vehicle-spects/1
 
 ###update one vehicle specific details
-PUT http://localhost:3000/api/vehicle-spects/1
+PUT http://localhost:3000/api/vehicle-spects/6
 Content-Type: application/json
 
     {
@@ -280,3 +280,17 @@ Content-Type: application/json
         "payment_method":"safaricom",
         "trasaction_id":"123456789"
     }
+
+
+###
+POST http://localhost:3000/api/payment
+Content-Type: application/json
+
+    {
+        "bookingId":27,
+        "amount":312
+    }
+
+###
+GET  http://localhost:3000/api/bookings/search/2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2Nywicm9sZSI6ImFkbWluIiwiZW1haWwiOiJtYWluYUBnbWFpbC5jb20iLCJleHAiOjE3MjE2ODE0MjZ9.Z0hgCI4CD5wdxj6b1BEKm7H3nG2-1_-OaEr81WItUGs

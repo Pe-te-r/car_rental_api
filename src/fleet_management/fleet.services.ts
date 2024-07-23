@@ -31,7 +31,25 @@ export const getFleetDetails= async(limit: number,details: boolean): Promise<fle
         return await db.query.fleetManagamentTable.findMany(
             {
                 with:{
-                    vehicle:true 
+                    vehicle:{
+                        columns:{
+                            vehicle_id:true,
+                        },
+                        with:{
+                            location:{
+                                columns:{
+                                    name:true,
+                                }
+                            },
+                            vehicleSpecification:{
+                                columns:{
+                                    manufacturer:true,
+                                    model:true,
+                                    year:true
+                                }
+                            }
+                        }
+                    }
                 }
             }
         )
@@ -46,7 +64,42 @@ export const getOneFleetDetails=async(id: number, details: boolean): Promise<any
         return await db.query.fleetManagamentTable.findFirst({
             where:eq(fleetManagamentTable.id,id),
             with:{
-               vehicle:true 
+               vehicle:{
+                    columns:{
+                        availability:true,
+                    },
+                    with:{
+                        bookings:{
+                            with:{
+                                user:{
+                                    columns:{
+                                        name:true,
+                                        email:true,
+                                        contact_phone:true,
+                                    }
+                                },
+                                payment:{
+                                    columns:{
+                                        payment_status:true,
+                                    }
+                                }
+                            }
+                        },
+                        location:{
+                            columns:{
+                                name:true
+                            }
+                        },
+                        vehicleSpecification:{
+                            columns:{
+                                manufacturer:true,
+                                model:true,
+                                year:true,
+                                color:true,
+                            }
+                        }
+                    }
+               }
             }
         })
     }else{

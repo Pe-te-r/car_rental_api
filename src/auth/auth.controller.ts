@@ -45,10 +45,13 @@ export const registerController=async(c: Context)=>{
     try {
         const newUser = await c.req.json()
         // check if user is already registered
+        console.log(newUser)
         const userExist =await userExists(newUser.email)
         if(userExist){
             return c.json({"error":"Email already exists"},400)
         }
+        console.log(userExist)
+        console.log('here')
         // hash the password.
         const password = newUser.password
         const saltRounds = 10;
@@ -64,7 +67,7 @@ export const registerController=async(c: Context)=>{
         if(storedPass){
             try {
                 sendMail('register',newUser.email,"car rental registration",newUser.name)
-                return c.json({'name':newUser.name})
+                return c.json({'username':newUser.name})
             } catch (error) {
                 return c.json('email not sent but logined well')
             }

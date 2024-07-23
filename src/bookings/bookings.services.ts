@@ -2,9 +2,11 @@ import { eq } from "drizzle-orm";
 import db from "../drizzle/db";
 import { bookingInsert, bookingSelect, bookingTable } from "../drizzle/schema";
 
-export const createBookingDetails=async(details: bookingInsert): Promise<string>=>{
-    await db.insert(bookingTable).values(details)
-    return "Booking created successfully"
+type TRIBook = Array<{ id: number }>;
+
+
+export const createBookingDetails=async(details: bookingInsert): Promise<TRIBook>=>{
+    return   await db.insert(bookingTable).values(details).returning({id:bookingTable.id}).execute()
 }
 
 export const deleteBookingDetails=async(id: number): Promise<string>=>{
@@ -86,4 +88,18 @@ export const getBookingDetailsByUserId=async(id: number,  details: boolean): Pro
             where:eq(bookingTable.id,id),
         })
     }
+}
+
+
+
+
+
+export const getBookingSearchResults=async(id: number)=>{
+    return await db.query.bookingTable.findMany({
+        where:eq(bookingTable.vehicle_id,id),
+        columns:{
+            booking_date: true,
+            return_date:true,
+        }
+    })
 }

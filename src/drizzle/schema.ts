@@ -55,7 +55,7 @@ export const locationTable = pgTable('locations', {
   contact: varchar('contact').notNull(),
 });
 
-export const statusEnum = pgEnum("rule", ["pending", "returned"]);
+export const statusEnum = pgEnum("rule", ["pending", "confirmed"]);
 
 export const bookingTable = pgTable('bookings', {
   id: serial('id').primaryKey().notNull(),
@@ -68,7 +68,7 @@ export const bookingTable = pgTable('bookings', {
   status: statusEnum('status').default("pending")
 });
 
-export const paymentEnum = pgEnum("rule", ["pending", "returned"]);
+export const paymentEnum = pgEnum("rule", ["pending", "confirmed"]);
 
 export const paymentTable = pgTable('payment', {
   id: serial('id').primaryKey().notNull(),
@@ -148,6 +148,7 @@ export const customer_supportRelations = relations(customer_support, ({ one }) =
     references: [usersTable.id],
   }),
 })); 
+
 
 export const locationRelations = relations(locationTable, ({ many }) => ({
   bookings: many(bookingTable),
