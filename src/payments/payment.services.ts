@@ -84,6 +84,7 @@ export const createPaymentService = () => {
             bookingId: bookingId.toString(),
           },
         });
+        
   
         const paymentIntent = await stripe.paymentIntents.create({
         amount: Number(amount) * 100, // Convert amount to cents
