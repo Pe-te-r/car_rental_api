@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 require("dotenv/config");
 const path = require("path");
 const hbs = require('nodemailer-express-handlebars');
-const sendMail = async (template, receiver, subject, username) => {
+const sendMail = async (template, receiver, subject, username, resetCode) => {
     // Create a transporter object using the Gmail SMTP transport
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -35,7 +35,8 @@ const sendMail = async (template, receiver, subject, username) => {
         subject: subject,
         template: template,
         context: {
-            username: username
+            username: username,
+            resetCode: resetCode
         }
     };
     // Send email

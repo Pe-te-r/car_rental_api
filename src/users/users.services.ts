@@ -1,11 +1,13 @@
 import { eq } from "drizzle-orm"
 import db from "../drizzle/db"
-import { UserSelect, userInsert, usersTable } from "../drizzle/schema"
-import { UserDetails } from "../types/types"
+import { UserSelect, authenicationTable, userInsert, usersTable } from "../drizzle/schema"
+// import { UserDetails } from "../types/types"
 
 
-export const getOneUserDetails = async (id: number): Promise<Partial<any> | undefined> => {
-    return await db.query.usersTable.findFirst({
+export const getOneUserDetails = async (id: number,details:boolean): Promise<Partial<any> | undefined> => {
+    if(details){
+
+        return await db.query.usersTable.findFirst({
         where: eq(usersTable.id, id),
         columns:{
             role:true,
@@ -64,6 +66,19 @@ export const getOneUserDetails = async (id: number): Promise<Partial<any> | unde
             }
         }
     })
+}else{
+    return await db.query.usersTable.findFirst({
+        where: eq(usersTable.id, id),
+        columns:{
+            role:true,
+            id:true,
+            contact_phone:true,
+            email:true,
+            name:true,
+        }
+    })
+}
+
 }
 
 export const getAllUserDetails=async(limit:number,details:boolean):Promise<Partial<UserSelect>[] | null> => {
@@ -111,3 +126,5 @@ export const updateUserDetails=async(id: number, user: Partial<userInsert>): Pro
         await db.update(usersTable).set(user).where(eq(usersTable.id, id ))
         return "updated"
     }
+
+

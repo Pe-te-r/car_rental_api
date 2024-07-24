@@ -20,6 +20,11 @@ export const vehiclesTable = pgTable('vehicles', {
   location_id: integer('location_id').references(()=>locationTable.id,{onDelete:'cascade'}),
 });
 
+export const resetCode = pgTable('resetcode', {
+  user_id: integer('user_id').primaryKey().notNull(),
+  code: varchar('code').notNull(),
+});
+
 export const vehicle_specsTable = pgTable('vehicle_specs', {
   vehicle_specsTable_id: integer('id').references(()=>vehiclesTable.vehicle_id, {onDelete:'cascade'}),
   manufacturer: varchar('manufacturer').notNull(),
@@ -93,7 +98,16 @@ export const usersRelations = relations(usersTable, ({ many, one }) => ({
   bookings: many(bookingTable),
   customerSupportTickets: many(customer_support),
   authentication: one(authenicationTable),
+  resetCode: one(resetCode), 
 })); 
+
+
+export const resetCodeRelations = relations(resetCode, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [resetCode.user_id],
+    references: [usersTable.id],
+  }),
+}));
 
 export const vehiclesRelations = relations(vehiclesTable, ({ one, many }) => ({
   vehicleSpecification: one(vehicle_specsTable,{

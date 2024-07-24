@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fleetManagamentRelations = exports.locationRelations = exports.customer_supportRelations = exports.authenicationRelations = exports.paymentRelations = exports.bookingRelations = exports.vehicle_specsRelations = exports.vehiclesRelations = exports.usersRelations = exports.customer_support = exports.paymentTable = exports.paymentEnum = exports.bookingTable = exports.statusEnum = exports.locationTable = exports.fleetManagamentTable = exports.authenicationTable = exports.vehicle_specsTable = exports.vehiclesTable = exports.usersTable = exports.roleEnum = void 0;
+exports.fleetManagamentRelations = exports.locationRelations = exports.customer_supportRelations = exports.authenicationRelations = exports.paymentRelations = exports.bookingRelations = exports.vehicle_specsRelations = exports.vehiclesRelations = exports.resetCodeRelations = exports.usersRelations = exports.customer_support = exports.paymentTable = exports.paymentEnum = exports.bookingTable = exports.statusEnum = exports.locationTable = exports.fleetManagamentTable = exports.authenicationTable = exports.vehicle_specsTable = exports.resetCode = exports.vehiclesTable = exports.usersTable = exports.roleEnum = void 0;
 const drizzle_orm_1 = require("drizzle-orm");
 const pg_core_1 = require("drizzle-orm/pg-core");
 exports.roleEnum = (0, pg_core_1.pgEnum)("role", ["admin", "user"]);
@@ -18,6 +18,10 @@ exports.vehiclesTable = (0, pg_core_1.pgTable)('vehicles', {
     rental_rate: (0, pg_core_1.decimal)('rental_rate'),
     availability: (0, pg_core_1.boolean)('availability').notNull(),
     location_id: (0, pg_core_1.integer)('location_id').references(() => exports.locationTable.id, { onDelete: 'cascade' }),
+});
+exports.resetCode = (0, pg_core_1.pgTable)('resetcode', {
+    user_id: (0, pg_core_1.integer)('user_id').primaryKey().notNull(),
+    code: (0, pg_core_1.varchar)('code').notNull(),
 });
 exports.vehicle_specsTable = (0, pg_core_1.pgTable)('vehicle_specs', {
     vehicle_specsTable_id: (0, pg_core_1.integer)('id').references(() => exports.vehiclesTable.vehicle_id, { onDelete: 'cascade' }),
@@ -83,6 +87,13 @@ exports.usersRelations = (0, drizzle_orm_1.relations)(exports.usersTable, ({ man
     bookings: many(exports.bookingTable),
     customerSupportTickets: many(exports.customer_support),
     authentication: one(exports.authenicationTable),
+    resetCode: one(exports.resetCode),
+}));
+exports.resetCodeRelations = (0, drizzle_orm_1.relations)(exports.resetCode, ({ one }) => ({
+    user: one(exports.usersTable, {
+        fields: [exports.resetCode.user_id],
+        references: [exports.usersTable.id],
+    }),
 }));
 exports.vehiclesRelations = (0, drizzle_orm_1.relations)(exports.vehiclesTable, ({ one, many }) => ({
     vehicleSpecification: one(exports.vehicle_specsTable, {

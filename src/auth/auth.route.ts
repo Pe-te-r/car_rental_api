@@ -1,12 +1,14 @@
 import { Hono } from "hono";
-import { loginController, registerController } from "./auth.controller";
-import { zValidator } from "@hono/zod-validator";
-import { userLogin, userRegister } from "../validators";
+import { changeInfo, loginController, registerController, sendCode } from "./auth.controller";
+// import { zValidator } from "@hono/zod-validator";
+// import { userLogin, userRegister } from "../validators";
 
 export const authRoute = new Hono()
 
 authRoute.post('/login', loginController)
 authRoute.post('/register',  registerController)
+authRoute.post('/code', sendCode)
+authRoute.put('/change',changeInfo)
 
 
 

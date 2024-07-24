@@ -4,14 +4,16 @@ exports.deleteUser = exports.updateUser = exports.addUser = exports.getAllUser =
 const users_services_1 = require("./users.services");
 const middleware_1 = require("../middle_auth/middleware");
 const getUser = async (c) => {
+    const query = c.req.query();
     const id = c.req.param('id');
+    const details = query['details'];
     const token = c.req.header("Authorization");
     const decoded = await (0, middleware_1.verifyToken)(token, process.env.SECRET_KEY);
     if (isNaN(Number(id)))
         return c.json({ "message": "insert a valid id" });
     if (Number(decoded?.user_id) !== Number(id) || !decoded)
         return c.json({ msg: "cannot get another user details" });
-    const result = await (0, users_services_1.getOneUserDetails)(Number(id));
+    const result = await (0, users_services_1.getOneUserDetails)(Number(id), Boolean(details));
     if (result === undefined)
         return c.json({ "message": `no such user with id ${id}` });
     return c.json({ "results": result });

@@ -1,9 +1,10 @@
 import { Context } from "hono";
 import * as bcrypt from "bcrypt";
-import {  deleteUserFailed, registerUser, storePassword, userExists } from "./auth.services";
+import {  checkResetCode, deleteUserFailed, insertResetCode, registerUser, storePassword, updatePassword, userExists } from "./auth.services";
 import {  sign} from "hono/jwt"
 import { loginReturnData } from "../types/types";
 import { sendMail } from "../send_mail/SendMail";
+import { updateUserDetails } from "../users/users.services";
 
 // login
 export const loginController=async(c: Context)=>{
@@ -78,5 +79,63 @@ export const registerController=async(c: Context)=>{
         
     } catch (error: any) {
         return c.json({'error':error?.message})
+    }
+}
+
+
+export const sendCode =async(c: Context)=>{
+    // generate code
+    const {email} =await c.req.json()
+    const userExist = await userExists(email)
+    console.log(userExist)
+    if(!userExist) return c.json({'error': 'User not found'})
+    const code = Math.floor(1000 + Math.random() * 9000)
+    console.log(code)
+    console.log('code:')
+    // store code in database
+    const stored =await insertResetCode(String(code),userExist.id)
+    console.log(stored)
+    console.log('here')
+    if(stored !== undefined){
+        sendMail('reset',email,'reset password',userExist.name,String(code))
+        return c.json({"message":"success"})
+    }else{
+        return c.json({"error":"error occured while sending the code"})
+    }
+}
+
+export const changeInfo=async(c: Context)=>{
+    const newDetails= await c.req.json()
+    console.log(newDetails)
+    const id = newDetails.user_id
+    console.log(id)
+    const code = newDetails.code
+    // check if code matches
+    const codeExist = await checkResetCode(code,id)
+    console.log(codeExist)
+    if(!codeExist) return c.json({'error': 'Invalid'})
+    delete newDetails.code
+    // update passsword
+    const password = newDetails?.password
+    if(password){
+        const saltRounds = 10;
+        const hashedPassword =await bcrypt.hash(password,saltRounds)
+        const updatePasswordResults = await updatePassword(hashedPassword,id)
+        if(updatePasswordResults !== 'success'){
+            return c.json({"error":"cannot update"})
+        }
+    }
+
+    // update user details
+    const newUser ={
+        name: newDetails.name,
+        email: newDetails.email,
+        contact_phone: newDetails.contact_phone
+    }
+    const updated = await updateUserDetails(id,newUser)
+    if(updated == 'updated'){
+        return c.json({"message":"success"})
+    }else{
+        return c.json({"error":"error occured while updating the user"})
     }
 }

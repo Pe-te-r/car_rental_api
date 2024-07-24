@@ -294,3 +294,12 @@ Content-Type: application/json
 ###
 GET  http://localhost:3000/api/bookings/search/2
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo2Nywicm9sZSI6ImFkbWluIiwiZW1haWwiOiJtYWluYUBnbWFpbC5jb20iLCJleHAiOjE3MjE2ODE0MjZ9.Z0hgCI4CD5wdxj6b1BEKm7H3nG2-1_-OaEr81WItUGs
+
+###
+POST  http://localhost:3000/api/code
+Content-Type: application/json
+
+
+    {
+        "email": "phantom8526@duck.com"
+    }

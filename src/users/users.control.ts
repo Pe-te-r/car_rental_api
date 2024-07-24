@@ -5,12 +5,14 @@ import { verifyToken } from "../middle_auth/middleware";
 
 
 export const getUser=async(c: Context)=>{
+    const query= c.req.query()
     const id = c.req.param('id')
+    const details = query['details']
     const token = c.req.header("Authorization");
     const decoded= await verifyToken(token as string,process.env.SECRET_KEY as string);
     if(isNaN(Number(id))) return c.json({"message":"insert a valid id"})
     if(Number(decoded?.user_id) !== Number(id) || !decoded) return c.json({msg:"cannot get another user details"})
-    const result = await getOneUserDetails(Number(id))
+    const result = await getOneUserDetails(Number(id),Boolean(details))
     if(result===undefined) return c.json({"message":`no such user with id ${id}`})
     return c.json({"results" : result})
 }

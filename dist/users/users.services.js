@@ -4,65 +4,80 @@ exports.updateUserDetails = exports.deletUsersDetails = exports.addUserDetails =
 const drizzle_orm_1 = require("drizzle-orm");
 const db_1 = require("../drizzle/db");
 const schema_1 = require("../drizzle/schema");
-const getOneUserDetails = async (id) => {
-    return await db_1.default.query.usersTable.findFirst({
-        where: (0, drizzle_orm_1.eq)(schema_1.usersTable.id, id),
-        columns: {
-            role: true,
-            id: true,
-            contact_phone: true,
-            email: true,
-            name: true,
-        },
-        with: {
-            bookings: {
-                with: {
-                    vehicle: {
-                        columns: {
-                            availability: true,
-                            vehicle_id: true,
-                        },
-                        with: {
-                            vehicleSpecification: {
-                                columns: {
-                                    model: true,
-                                    color: true,
-                                    fuel_type: true,
-                                    manufacturer: true,
-                                    engine_capacity: true,
-                                    seating_capacity: true,
-                                }
+// import { UserDetails } from "../types/types"
+const getOneUserDetails = async (id, details) => {
+    if (details) {
+        return await db_1.default.query.usersTable.findFirst({
+            where: (0, drizzle_orm_1.eq)(schema_1.usersTable.id, id),
+            columns: {
+                role: true,
+                id: true,
+                contact_phone: true,
+                email: true,
+                name: true,
+            },
+            with: {
+                bookings: {
+                    with: {
+                        vehicle: {
+                            columns: {
+                                availability: true,
+                                vehicle_id: true,
                             },
-                            location: {
-                                columns: {
-                                    name: true,
-                                    address: true,
-                                    contact: true,
+                            with: {
+                                vehicleSpecification: {
+                                    columns: {
+                                        model: true,
+                                        color: true,
+                                        fuel_type: true,
+                                        manufacturer: true,
+                                        engine_capacity: true,
+                                        seating_capacity: true,
+                                    }
+                                },
+                                location: {
+                                    columns: {
+                                        name: true,
+                                        address: true,
+                                        contact: true,
+                                    }
                                 }
                             }
                         }
+                    },
+                    columns: {
+                        // location_id: true,
+                        booking_date: true,
+                        // vehicle_id:true,
+                        totalAmount: true,
+                        // id: true,
+                        return_date: true,
+                        status: true,
                     }
                 },
-                columns: {
-                    // location_id: true,
-                    booking_date: true,
-                    // vehicle_id:true,
-                    totalAmount: true,
-                    // id: true,
-                    return_date: true,
-                    status: true,
-                }
-            },
-            customerSupportTickets: {
-                columns: {
-                    description: true,
-                    status: true,
-                    subject: true,
-                    id: true,
+                customerSupportTickets: {
+                    columns: {
+                        description: true,
+                        status: true,
+                        subject: true,
+                        id: true,
+                    }
                 }
             }
-        }
-    });
+        });
+    }
+    else {
+        return await db_1.default.query.usersTable.findFirst({
+            where: (0, drizzle_orm_1.eq)(schema_1.usersTable.id, id),
+            columns: {
+                role: true,
+                id: true,
+                contact_phone: true,
+                email: true,
+                name: true,
+            }
+        });
+    }
 };
 exports.getOneUserDetails = getOneUserDetails;
 const getAllUserDetails = async (limit, details) => {

@@ -4,7 +4,7 @@ import * as path from 'path';
 const hbs = require('nodemailer-express-handlebars');
 
 
-export const sendMail = async (template: string, receiver: string, subject: string, username?: string) => {
+export const sendMail = async (template: string, receiver: string, subject: string, username?: string,resetCode?:string) => {
   // Create a transporter object using the Gmail SMTP transport
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -38,7 +38,8 @@ export const sendMail = async (template: string, receiver: string, subject: stri
     subject: subject,
     template: template,
     context: {
-      username: username
+      username: username,
+      resetCode: resetCode
     }
   };
   
