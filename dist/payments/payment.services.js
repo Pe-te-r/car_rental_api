@@ -79,8 +79,8 @@ const createPaymentService = () => {
                     },
                 ],
                 mode: "payment",
-                success_url: `${process.env.FRONTEND_URL}/dashboard`,
-                cancel_url: `${process.env.FRONTEND_URL}/booking-cancelled`,
+                success_url: `${process.env.FRONTEND_URL}/`,
+                cancel_url: `${process.env.FRONTEND_URL}/`,
                 metadata: {
                     bookingId: bookingId.toString(),
                 },
